@@ -6,7 +6,7 @@
           :link="{
             name: 'Inicio',
             path: '/dashboard',
-            icon: 'ni ni-tv-2 text-primary',
+            icon: 'fas fa-home text-grey'
           }"
         >
         </sidebar-item>
@@ -15,7 +15,7 @@
             :link="{
               name: 'Asociaciones',
               path: '/asociaciones',
-              icon: 'ni ni-planet text-blue'
+              icon: 'fas fa-building text-grey'
               }"
             >
         </sidebar-item>
@@ -24,7 +24,7 @@
               :link="{
                 name: 'Posts',
                 path: '/posts',
-                icon: 'ni ni-pin-3 text-orange'
+                icon: 'far fa-newspaper text-grey'
               }">
         </sidebar-item>
 
@@ -32,7 +32,7 @@
               :link="{
                 name: 'Apicultores',
                 path: '/apicultores',
-                icon: 'ni ni-single-02 text-yellow'
+                icon: 'fas fa-user-tie text-grey'
                 }">
         </sidebar-item>
 
@@ -40,21 +40,21 @@
                 :link="{
                   name: 'Usuarios',
                   path: '/usuarios',
-                  icon: 'ni ni-bullet-list-67 text-red'
+                  icon: 'fas fa-users text-grey'
                 }">
-        </sidebar-item>
-         <sidebar-item
+        </sidebar-item> 
+   <sidebar-item
                 :link="{
                   name: 'Areas de floración',
                   path: '/floraciones',
-                  icon: 'ni ni-bullet-list-67 text-red'
+                  icon: 'fas fa-map-marked-alt text-grey'
                 }">
         </sidebar-item>
         <sidebar-item
                 :link="{
                   name: 'Productos',
                   path: '/productos',
-                  icon: 'ni ni-bullet-list-67 text-red'
+                  icon: 'fas fa-utensils text-grey'
                 }">
         </sidebar-item>
       </template>
@@ -81,6 +81,8 @@
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
+  
+
   function hasElement(className) {
     return document.getElementsByClassName(className).length > 0;
   }
@@ -100,6 +102,7 @@
   import ContentFooter from './ContentFooter.vue';
   import DashboardContent from './Content.vue';
   import { FadeTransition } from 'vue2-transitions';
+
 
   export default {
     components: {

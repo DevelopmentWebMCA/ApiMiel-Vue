@@ -48,7 +48,7 @@
         :class="{ active: link.active }"
         :target="link.target"
         :href="link.path"
-      >
+      > 
         <template v-if="addLink">
           <span class="nav-link-text">{{ link.name }}</span>
         </template>
