@@ -12,6 +12,7 @@
             font-weight: $navbar-nav-link-font-weight;
             text-transform: $navbar-nav-link-text-transform;
             letter-spacing: $navbar-nav-link-letter-spacing;
+            
             @include transition($navbar-transition);
 
             .nav-link-inner--text {
@@ -31,7 +32,7 @@
         letter-spacing: .05px;
 
         img {
-            height: 30px;
+            height: 25%;
         }
     }
 
@@ -51,6 +52,7 @@
       .nav-item {
         .media:not(:last-child){
           margin-bottom: 1.5rem;
+          color: red;
         }
       }
     }
