@@ -43,6 +43,18 @@ const routes = [
         name: 'usuarios',
         component: () => import('../views/MODULO_USUARIOS/ViewUsuarios.vue')
       },
+      {
+        path: '/agregarUsuario',
+        name: 'agregarUsuario',
+        component: () => import('../views/MODULO_USUARIOS/AgregarUsuario.vue')
+      },
+      ,
+      {
+        path: '/modificarUsuario/:id',
+        name: 'modificarUsuario',
+        component: () => import('../views/MODULO_USUARIOS/ModificarUsuario.vue'),
+        props: true
+      },
 
        //RUTAS PARA FLORACIONES
       {
