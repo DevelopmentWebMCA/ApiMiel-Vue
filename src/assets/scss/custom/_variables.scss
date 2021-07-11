@@ -108,6 +108,10 @@ $danger:        $red !default;
 $light:         $gray-500 !default;
 $dark:          $gray-900 !default;
 $darker:        darken($gray-900, 15%) !default;
+$naranja-primario: #D07B3C !default;
+$verde-modificar: #449E73 !default;
+$amarillo-guardar: #FFD875 !default;
+$rojo-eliminar: #F45858 !default;
 
 $facebook:      #3b5999 !default;
 $twitter:       #1da1f2 !default;
@@ -131,7 +135,11 @@ $theme-colors: map-merge((
   "white":        $white,
   "neutral":      $white,
   "dark":         $dark,
-  "darker":       $darker
+  "darker":       $darker,
+  "primario":     $naranja-primario,
+  "modificar":    $verde-modificar,
+  "guardar":      $amarillo-guardar,
+  "eliminar":     $rojo-eliminar,
 ), $theme-colors);
 
 $brand-colors: () !default;
