@@ -9,6 +9,15 @@
       "
     >
       <b-container fluid>
+        <b-alert
+        :show="dismissCountDown"
+        dismissible
+        fade
+        variant="success"
+        class="position-fixed fixed-top m-0 rounded-0"
+        @dismiss-count-down="countDownChanged">
+        Usuario modificado correctamente
+      </b-alert>
         <b-row>
           <b-col>
             <h1>Usuarios</h1>
@@ -22,7 +31,7 @@
         >
           <h2 class="text-center fontLabel">Modificar usuario</h2>
           <hr class="mt-2 separador">
-          <b-form @submit="onSubmit" v-if="show">
+          <b-form v-if="show">
             <b-container>
               <b-row>
                 <b-col cols= "12" lg="6" xl="6">
@@ -97,11 +106,10 @@
               </b-row>
               <b-row>
                 <b-col align="right">
-                  <b-button type="submit" variant="guardar" class="text-white"
+                  <b-button @click="guardarFormulario(users.idUsuario)" type="submit" variant="guardar" class="text-white"
                     >Guardar</b-button>
                   <b-button href="#/usuarios" variant="eliminar">Cancelar</b-button>
                 </b-col>
-                
               </b-row>
             </b-container>
           </b-form>
@@ -118,6 +126,8 @@ export default {
   name: "ModificarUsuario",
   data() {
     return {
+      dismissSecs: 5,
+      dismissCountDown: 0,
       users: [],
       selected: null,
       roles: [],
@@ -126,10 +136,6 @@ export default {
     };
   },
   methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      alert(JSON.stringify(this.users));
-    },
     ObtenerUsuario(id) {
       const path = `http://localhost:9090/apimiel/web/usuarios/${id}`;
       axios
@@ -163,6 +169,30 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    guardarFormulario(id){
+      const path = `http://localhost:9090/apimiel/web/usuarios/modificar/${id}`;
+      axios
+        .put(path, {
+          nombreUsuario: this.users.nombreUsuario,
+          correoElectronico: this.users.correoElectronico,
+          contrasenia: this.users.contrasenia,
+          rolUsuario: {
+            idRol: this.selected
+          }
+        })
+        .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+     // alert(JSON.stringify(this.users));
+     this.dismissCountDown = this.dismissSecs;
+     setTimeout( () => this.$router.push({ path: '/usuarios'}), 2000);
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
     },
   },
   created() {

@@ -7,9 +7,8 @@
         :show="dismissCountDown"
         dismissible
         fade
-        variant="success"
+        variant="eliminar"
         class="position-fixed fixed-top m-0 rounded-0"
-        
         @dismiss-count-down="countDownChanged">
         Usuario eliminado correctamente
       </b-alert>
@@ -24,11 +23,11 @@
           </b-button>
         </b-col>
       </b-row>
-
       <b-jumbotron
         bg-variant="white"
         class="shadow-lg p-5 mb-5 bg-white rounded"
       >
+      
         <b-card
           id="sombra"
           bg-variant="white"
@@ -45,17 +44,17 @@
               <b-col align="center" cols="12" md="12" lg="2" xl="2">
                 <span class="rounded-circle">
                   <img v-if="user.rolUsuario.idRol===1"
-                    src="https://image.flaticon.com/icons/png/512/2393/2393115.png"
+                    :src="logoInv"
                     alt="img investigador"
                     v-bind="mainProps"
                   />
                   <b-img v-if="user.rolUsuario.idRol===2"
-                    src="https://image.flaticon.com/icons/png/512/1556/1556232.png"
+                    :src="logoAdm"
                     alt="img administrador"
                     v-bind="mainProps"
                   ></b-img>
                   <b-img v-if="user.rolUsuario.idRol===3"
-                    src="https://image.flaticon.com/icons/png/512/4265/4265337.png"
+                    :src="logoApi"
                     alt="img apicultor"
                     v-bind="mainProps"
                   ></b-img>
@@ -93,12 +92,14 @@
                   block
                   variant="eliminar"
                   ref="popover"
+                  @click="onOpen(`popover-1-${user.idUsuario}`)"
                 >
                   <b-icon icon="trash-fill"></b-icon>
                   Eliminar
                 </b-button>
-                <b-popover :target="`popover-1-${user.idUsuario}`" placement>
-                  <template>
+                <b-popover :target="`popover-1-${user.idUsuario}`" placement triggers="">
+                  <div class="p-2">
+                    <template>
                     <b-button
                       @click="onClose(user.isUsuario)"
                       class="close"
@@ -106,20 +107,27 @@
                     >
                       <span class="d-inline-block">&times;</span>
                     </b-button>
-                    Eliminar asociación
+                    <strong>Eliminar usuario</strong>
                   </template>
+                  </div>
 
-                  <div>
-                    <b-alert variant="" show class="small text-center">
-                      <strong>¿Desea eliminar la asociacion?</strong><br />
+                  <div class="p-2">
+                    <b-alert variant="" show class="small text-center p-1">
+                      ¿Desea eliminar el usuario <strong>{{user.nombreUsuario}}</strong>?<br />
                     </b-alert>
                     <b-row align-h="center">
                       <b-col cols="5">
                         <b-button
                           size="sm"
                           variant="primary"
-                          @click="eliminarUsuario(user.idUsuario)"
-                          >Confirmar</b-button
+                          @click="onClose(user.isUsuario)">Cancelar</b-button
+                        >
+                      </b-col>
+                      <b-col cols="5">
+                        <b-button
+                          size="sm"
+                          variant="eliminar"
+                          @click="eliminarUsuario(user.idUsuario)">Eliminar</b-button
                         >
                       </b-col>
                     </b-row>
@@ -147,7 +155,23 @@ export default {
       mainProps: { width: 75, height: 75, class: 'm1' }
     };
   },
-  props: ["id"],
+  props: {
+    logoInv: {
+        type: String,
+        default: 'img/brand/investigador.png',
+        description: 'card logo'
+      },
+      logoAdm: {
+        type: String,
+        default: 'img/brand/admin.png',
+        description: 'card logo'
+      },
+      logoApi: {
+        type: String,
+        default: 'img/brand/apicultor.png',
+        description: 'card logo'
+      },
+  },
   methods: {
     obtenerUsuarios() {
       const path = "http://localhost:9090/apimiel/web/usuarios";
@@ -178,6 +202,10 @@ export default {
     },
     onClose(id) {
       this.$root.$emit("bv::hide::popover", id);
+    },
+    onOpen(id){
+      this.$root.$emit('bv::hide::popover')
+      this.$root.$emit('bv::show::popover', id);
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;

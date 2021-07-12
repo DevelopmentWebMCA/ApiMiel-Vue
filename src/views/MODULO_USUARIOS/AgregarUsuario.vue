@@ -9,6 +9,28 @@
       "
     >
       <b-container fluid>
+        <b-alert
+          v-show="alertMsj === true"
+          :show="dismissCountDown"
+          dismissible
+          fade
+          variant="success"
+          class="position-fixed fixed-top m-0 rounded-0"
+          @dismiss-count-down="countDownChanged"
+        >
+          Usuario agregado correctamente
+        </b-alert>
+        <b-alert
+          v-show="alertMsj === false"
+          :show="dismissCountDown"
+          dismissible
+          fade
+          variant="warning"
+          class="position-fixed fixed-top m-0 rounded-0"
+          @dismiss-count-down="countDownChanged"
+        >
+          Favor de llenar el formulario
+        </b-alert>
         <b-row>
           <b-col>
             <h1>Usuarios</h1>
@@ -20,11 +42,11 @@
           class="shadow-lg p-5 mb-5 bg-white rounded"
         >
           <h2 class="text-center fontLabel">Agregar usuario</h2>
-          <hr class="separador mt-2"/>
-          <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+          <hr class="separador mt-2" />
+          <b-form>
             <b-container>
               <b-row>
-                <b-col cols= "12" lg="6" xl="6">
+                <b-col cols="12" lg="6" xl="6">
                   <b-form-group
                     id="input-group-name"
                     label="Nombre Completo:"
@@ -33,9 +55,8 @@
                   >
                     <b-form-input
                       id="input-name"
-                      v-model="form.name"
+                      v-model="users.nombreUsuario"
                       placeholder="Escribir nombre completo"
-                      required
                       class="fontInput"
                     ></b-form-input>
                   </b-form-group>
@@ -49,18 +70,17 @@
                   >
                     <b-form-input
                       id="input-correo"
-                      v-model="form.email"
+                      class="fontInput"
+                      v-model="users.correoElectronico"
                       type="email"
                       placeholder="Escribir correo electrónico"
-                      required
-                      class="fontInput"
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
               </b-row>
 
               <b-row>
-                <b-col cols= "12" lg="6" xl="6">
+                <b-col cols="12" lg="6" xl="6">
                   <b-form-group
                     @submit.stop.prevent
                     id="input-group-contrasiena"
@@ -71,6 +91,7 @@
                     <b-form-input
                       type="password"
                       id="text-password"
+                      v-model="users.contrasenia"
                       aria-describedby="password-help-block"
                       class="fontInput"
                     ></b-form-input>
@@ -88,9 +109,10 @@
                   >
                     <b-form-select
                       id="input-rol"
-                      v-model="form.rol"
-                      :options="rol"
-                      required
+                      :options="roles"
+                      v-model="users.rolUsuario.idRol"
+                      value-field="idRol"
+                      text-field="nombreRol"
                       class="fontInput"
                     ></b-form-select>
                   </b-form-group>
@@ -98,15 +120,20 @@
               </b-row>
               <b-row>
                 <b-col align="right">
-                  <b-button type="submit" variant="guardar" class="text-white">Guardar</b-button>
-                  <b-button href="#/usuarios" type="reset" variant="eliminar">Cancelar</b-button>
+                  <b-button
+                    @click="onSubmit()"
+                    type="submit"
+                    variant="guardar"
+                    class="text-white"
+                    >Guardar</b-button
+                  >
+                  <b-button href="#/usuarios" type="reset" variant="eliminar"
+                    >Cancelar</b-button
+                  >
                 </b-col>
               </b-row>
             </b-container>
           </b-form>
-          <b-card class="mt-3" header="Form Data Result">
-            <pre class="m-0">{{ form }}</pre>
-          </b-card>
         </b-jumbotron>
       </b-container>
     </div>
@@ -114,61 +141,94 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "AgregarUsuario",
   data() {
     return {
-      users:[],
-      form: {
-        name: "",
-        email: "",
-        rol: null,
+      dismissSecs: 5,
+      alertMsj: false,
+      dismissCountDown: 0,
+      users: {
+        nombreUsuario: "",
+        correoElectronico: "",
+        contrasenia: "",
+        rolUsuario: {
+          idRol: null,
+        },
       },
-      rol: [
-        { text: "Elige un rol", value: null },
-        "Investigador",
-        "Administrador",
-      ],
+      selected: null,
+      roles: [],
       show: true,
     };
   },
+  props: {
+    
+  },
   methods: {
-    onSubmit(event) {
-      event.preventDefault();
-      alert(JSON.stringify(this.form));
+    onSubmit() {
+      const path = "http://localhost:9090/apimiel/web/usuarios/agregar";
+
+      if (this.users.nombreUsuario && this.users.correoElectronico && this.users.contrasenia && this.users.rolUsuario.idRol) {
+          this.alertMsj = true;
+          setTimeout(() => this.$router.push({ path: "/usuarios" }), 2000);
+      axios
+        .post(path, {
+          nombreUsuario: this.users.nombreUsuario,
+          correoElectronico: this.users.correoElectronico,
+          contrasenia: this.users.contrasenia,
+          rolUsuario: {
+            idRol: this.users.rolUsuario.idRol,
+          },
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        }); 
+
+      } 
+      this.dismissCountDown = this.dismissSecs;
+
+      // alert(JSON.stringify(this.users));
     },
-    onReset(event) {
-      event.preventDefault();
-      // Reset our form values
-      this.form.name = "";
-      this.form.email = "";
-      this.form.rol = null;
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = false;
-      });
+    catalogoRoles() {
+      const path = "http://localhost:9090/apimiel/web/roles";
+      axios
+        .get(path)
+        .then((response) => {
+          this.roles = response.data;
+          console.log(this.roles);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
+    },
+  },
+  created() {
+    this.catalogoRoles();
   },
 };
 </script>
 
 <style scoped>
-
-.fontInput{
-  background-color: #F5F7FF;
-  color: #4283EB;
+.fontInput {
+  background-color: #f5f7ff;
+  color: #4283eb;
 }
 
-.fontLabel{
+.fontLabel {
   color: #767676;
   font-weight: bold;
 }
 
-.separador{
- border: 1px solid #767676;
- border-radius: 50px;
- background-color: gray;
+.separador {
+  border: 1px solid #767676;
+  border-radius: 50px;
+  background-color: gray;
 }
-
 </style>
