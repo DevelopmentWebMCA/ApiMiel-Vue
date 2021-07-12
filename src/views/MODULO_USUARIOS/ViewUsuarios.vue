@@ -3,6 +3,17 @@
     <br />
     <br />
     <b-container fluid>
+      <b-alert
+        :show="dismissCountDown"
+        dismissible
+        fade
+        variant="success"
+        class="position-fixed fixed-top m-0 rounded-0"
+        
+        @dismiss-count-down="countDownChanged">
+        Usuario eliminado correctamente
+      </b-alert>
+
       <b-row>
         <b-col>
           <h1>Usuarios</h1>
@@ -33,11 +44,21 @@
             <b-row align-v="center" class="card-item">
               <b-col align="center" cols="12" md="12" lg="2" xl="2">
                 <span class="rounded-circle">
-                  <img
+                  <img v-if="user.rolUsuario.idRol===1"
+                    src="https://image.flaticon.com/icons/png/512/2393/2393115.png"
+                    alt="img investigador"
                     v-bind="mainProps"
-                    alt="img apicultor"
-                    src="https://image.flaticon.com/icons/png/512/2658/2658085.png"
                   />
+                  <b-img v-if="user.rolUsuario.idRol===2"
+                    src="https://image.flaticon.com/icons/png/512/1556/1556232.png"
+                    alt="img administrador"
+                    v-bind="mainProps"
+                  ></b-img>
+                  <b-img v-if="user.rolUsuario.idRol===3"
+                    src="https://image.flaticon.com/icons/png/512/4265/4265337.png"
+                    alt="img apicultor"
+                    v-bind="mainProps"
+                  ></b-img>
                 </span>
               </b-col>
               <b-col cols="12" lg="4" xl="5">
@@ -67,22 +88,23 @@
                   <b-icon icon="pencil-fill"></b-icon> Modificar</b-button
                 >
                 <b-button
-                  id="popover-reactive-1"
+                  :id="`popover-1-${user.idUsuario}`"
                   size="sm"
                   block
-                  variant="eliminar">
+                  variant="eliminar"
+                  ref="popover"
+                >
                   <b-icon icon="trash-fill"></b-icon>
                   Eliminar
                 </b-button>
-                <b-popover
-                  target="popover-reactive-1"
-                  :show.sync="popoverShow"
-                >
-                  <template id="title_popover" #title>
-                    <b-button @click="onClose" class="close" aria-label="Close">
-                      <span class="d-inline-block" aria-hidden="true"
-                        >&times;</span
-                      >
+                <b-popover :target="`popover-1-${user.idUsuario}`" placement>
+                  <template>
+                    <b-button
+                      @click="onClose(user.isUsuario)"
+                      class="close"
+                      aria-label="Close"
+                    >
+                      <span class="d-inline-block">&times;</span>
                     </b-button>
                     Eliminar asociación
                   </template>
@@ -93,7 +115,10 @@
                     </b-alert>
                     <b-row align-h="center">
                       <b-col cols="5">
-                        <b-button pill  size="sm" variant="primary"
+                        <b-button
+                          size="sm"
+                          variant="primary"
+                          @click="eliminarUsuario(user.idUsuario)"
                           >Confirmar</b-button
                         >
                       </b-col>
@@ -116,14 +141,10 @@ export default {
   data() {
     return {
       users: [],
-      popoverShow: false,
-      mainProps: {
-        blank: false,
-        blankColor: "#777",
-        width: 75,
-        height: 67,
-        class: "m1",
-      },
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      showDismissibleAlert: false,
+      mainProps: { width: 75, height: 75, class: 'm1' }
     };
   },
   props: ["id"],
@@ -143,7 +164,7 @@ export default {
     modificarUsuario(id) {
       this.$router.push(`/modificarUsuario/${id}`);
     },
-    eliminarAsociacion(id) {
+    eliminarUsuario(id) {
       const path = `http://localhost:9090/apimiel/web/usuarios/eliminar/${id}`;
       axios
         .delete(path)
@@ -153,9 +174,13 @@ export default {
         .catch((error) => {
           alert("ocurrio un error");
         });
+      this.dismissCountDown = this.dismissSecs;
     },
-    onClose() {
-      this.popoverShow = false;
+    onClose(id) {
+      this.$root.$emit("bv::hide::popover", id);
+    },
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
     },
   },
   created() {
@@ -165,8 +190,9 @@ export default {
 </script>
 
 <style scoped>
-*#sombra {
+#sombra {
   box-shadow: 3px 5px 12px 3px gray;
   border-radius: 10px, 10px, 10px, 10px;
 }
+
 </style>

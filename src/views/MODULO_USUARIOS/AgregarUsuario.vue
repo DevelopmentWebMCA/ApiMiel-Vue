@@ -24,7 +24,7 @@
           <b-form @submit="onSubmit" @reset="onReset" v-if="show">
             <b-container>
               <b-row>
-                <b-col>
+                <b-col cols= "12" lg="6" xl="6">
                   <b-form-group
                     id="input-group-name"
                     label="Nombre Completo:"
@@ -60,7 +60,7 @@
               </b-row>
 
               <b-row>
-                <b-col>
+                <b-col cols= "12" lg="6" xl="6">
                   <b-form-group
                     @submit.stop.prevent
                     id="input-group-contrasiena"
