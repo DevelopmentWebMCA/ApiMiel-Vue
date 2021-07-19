@@ -20,7 +20,17 @@ const routes = [
         name: 'viewAsociaciones',
         component: () => import('../views/MODULO_ASOCIACIONES/ViewAsociaciones.vue')
       },
-
+      {
+        path: '/asociaciones/agregar',
+        name: 'viewAsociacionesAgregar',
+        component: () => import('../views/MODULO_ASOCIACIONES/AgregarAsociacion.vue')
+      },
+      {
+        path: '/asociaciones/actualizar/:id',
+        name: 'viewAsociacionesModificar',
+        component: () => import('../views/MODULO_ASOCIACIONES/ModificarAsociacion.vue'),
+        props:true
+      },
 
 
        //RUTAS PARA APICULTORES
