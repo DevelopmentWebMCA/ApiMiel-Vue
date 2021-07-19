@@ -25,7 +25,7 @@
                               placeholder="Usuario"
                               v-model="model.email">
                   </base-input>
-
+<!-- En :rules min:6 se puede definir la cantidad de caracteres minima para ingresar -->
                   <base-input alternative
                               class="mb-3"
                               name="contrasena"
