@@ -80,7 +80,7 @@
   /* eslint-disable no-new */
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
-
+  
   
 
   function hasElement(className) {

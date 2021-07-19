@@ -8,7 +8,7 @@
         <div class="login">
         <b-row>
           <b-col style="background-color:#FFF6D4;" ><br><br><br>
-            <img src="img/brand/green.png"  class="img">
+            <img src="img/brand/green2.png"  class="img">
           </b-col>
           <b-col style="background-color:#EB904D;"><br><br><br>
           <div class="justify text-center">

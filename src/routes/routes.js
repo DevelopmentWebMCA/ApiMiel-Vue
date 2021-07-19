@@ -91,11 +91,6 @@ const routes = [
         name: 'login',
         component: () => import(/* webpackChunkName: "demo" */ '../views/MODULO_LOGIN/ViewLogin.vue')
       },
-      {
-        path: '/register',
-        name: 'register',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Register.vue')
-      },
       { path: '*', component: NotFound }
     ]
   }
