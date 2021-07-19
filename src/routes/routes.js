@@ -79,11 +79,6 @@ const routes = [
         name: 'productos',
         component: () => import('../views/MODULO_PRODUCTOS/ViewProductos.vue')
       },
-      {
-        path: '/logins',
-        name: 'viewLogin',
-        component: () => import('../views/MODULO_LOGIN/ViewLogin.vue')
-      }
     ]
   },
   {

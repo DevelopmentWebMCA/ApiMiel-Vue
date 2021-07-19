@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div >
 
     <!-- Page content -->
-    <b-container>
+    <b-container class="contenedor">
       <b-row class="justify-content-center" >
 
-        <div>
+        <div class="login">
         <b-row>
           <b-col style="background-color:#FFF6D4;" ><br><br><br>
-            <img src="img/brand/green.png" width="650px" height="320px">
+            <img src="img/brand/green.png"  class="img">
           </b-col>
           <b-col style="background-color:#EB904D;"><br><br><br>
           <div class="justify text-center">
@@ -65,3 +65,28 @@
     }
   };
 </script>
+<style scoped>
+
+.img {
+
+  width:650px; 
+  height:320px;
+}
+@media (max-width: 768px) {
+    .img {
+          width:300px; 
+          height:200px;
+    }
+
+    .login 
+  
+    {
+      width: 300px;
+    }
+
+    .contenedor{
+
+      margin-top: 0px;
+    }
+}
+</style>
