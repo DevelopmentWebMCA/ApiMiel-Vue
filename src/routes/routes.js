@@ -78,6 +78,11 @@ const routes = [
         path: '/productos',
         name: 'productos',
         component: () => import('../views/MODULO_PRODUCTOS/ViewProductos.vue')
+      },
+      {
+        path: '/logins',
+        name: 'viewLogin',
+        component: () => import('../views/MODULO_LOGIN/ViewLogin.vue')
       }
     ]
   },
@@ -89,7 +94,7 @@ const routes = [
       {
         path: '/login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "demo" */ '../views/Pages/Login.vue')
+        component: () => import(/* webpackChunkName: "demo" */ '../views/MODULO_LOGIN/ViewLogin.vue')
       },
       {
         path: '/register',
