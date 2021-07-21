@@ -41,7 +41,7 @@
           bg-variant="white"
           class="shadow-lg p-5 mb-5 bg-white rounded"
         >
-          <h2 class="text-center fontLabel">Agregar usuario</h2>
+          <h2 class="text-center fontLabel">Agregar Usuario</h2>
           <hr class="separador mt-2" />
           <b-form>
             <b-container>
@@ -124,10 +124,10 @@
                     @click="onSubmit()"
                     type="submit"
                     variant="guardar"
-                    class="text-white"
+                    class="text-white m-2"
                     >Guardar</b-button
                   >
-                  <b-button href="#/usuarios" type="reset" variant="eliminar"
+                  <b-button class="mr-2" href="#/usuarios" type="reset" variant="eliminar"
                     >Cancelar</b-button
                   >
                 </b-col>

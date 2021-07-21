@@ -16,7 +16,7 @@
         variant="success"
         class="position-fixed fixed-top m-0 rounded-0"
         @dismiss-count-down="countDownChanged">
-        Usuario modificado correctamente
+        Usuario guardado correctamente
       </b-alert>
         <b-row>
           <b-col>
@@ -29,7 +29,7 @@
           bg-variant="white"
           class="shadow-lg p-5 mb-5 bg-white rounded"
         >
-          <h2 class="text-center fontLabel">Modificar usuario</h2>
+          <h2 class="text-center fontLabel">Modificar Usuario</h2>
           <hr class="mt-2 separador">
           <b-form v-if="show">
             <b-container>
@@ -77,9 +77,10 @@
                   >
                     <b-form-input
                       v-model="users.contrasenia"
-                      class="fontInput"
+                      type="password"
                       id="text-password"
                       aria-describedby="password-help-block"
+                      disabled
                     ></b-form-input>
                     <b-form-text id="password-help-block">
                       Su contraseña debe tener entre 8 y 20.
@@ -104,11 +105,11 @@
                   </b-form-group>
                 </b-col>
               </b-row>
-              <b-row>
-                <b-col align="right">
-                  <b-button @click="guardarFormulario(users.idUsuario)" type="submit" variant="guardar" class="text-white"
+              <b-row align="right" >
+                <b-col align="right" >
+                  <b-button @click="guardarFormulario(users.idUsuario)" type="submit" variant="guardar" class="text-white m-2"
                     >Guardar</b-button>
-                  <b-button href="#/usuarios" variant="eliminar">Cancelar</b-button>
+                  <b-button class="mr-2" href="#/usuarios" variant="eliminar">Cancelar</b-button>
                 </b-col>
               </b-row>
             </b-container>

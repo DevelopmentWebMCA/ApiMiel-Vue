@@ -25,14 +25,14 @@
       </b-row>
       <b-jumbotron
         bg-variant="white"
-        class="shadow-lg p-5 mb-5 bg-white rounded"
+        class="shadow-lg p-4 m-2 bg-white rounded"
       >
       
         <b-card
           id="sombra"
           bg-variant="white"
           text-variant="black"
-          class="p-3 mb-5 bg-white rounded cardText"
+          class="p-2 mb-5 bg-white rounded cardText"
           v-for="user in users"
           v-bind:key="user.idUsuario"
         >
@@ -62,19 +62,19 @@
               </b-col>
               <b-col cols="12" lg="4" xl="5">
                 <b-card-text class="cardText">
-                  <b-icon icon="person"></b-icon>
+                  <b-icon icon="file-person"></b-icon>
                   {{ user.idUsuario }}
                   <br />
-                  <b-icon icon="envelope"></b-icon>
+                  <b-icon icon="envelope-fill"></b-icon>
                   {{ user.correoElectronico }}
                 </b-card-text>
               </b-col>
               <b-col align-self="center" lg="3" xl="3">
                 <b-card-text>
-                  <b-icon icon="card-list"></b-icon>
+                  <b-icon icon="people-fill"></b-icon>
                   {{ user.rolUsuario.nombreRol }}
                   <br />
-                  <b-icon icon="shield-lock"></b-icon> ***********
+                  <b-icon icon="shield-lock-fill"></b-icon> **********
                 </b-card-text>
               </b-col>
               <b-col align-self="center" cols="12" lg="3" xl="2">
@@ -101,7 +101,7 @@
                   <div class="p-2">
                     <template>
                     <b-button
-                      @click="onClose(user.isUsuario)"
+                      @click="onClose(`popover-1-${user.idUsuario}`)"
                       class="close"
                       aria-label="Close"
                     >
@@ -120,7 +120,7 @@
                         <b-button
                           size="sm"
                           variant="primary"
-                          @click="onClose(user.isUsuario)">Cancelar</b-button
+                          @click="onClose(`popover-1-${user.idUsuario}`)">Cancelar</b-button
                         >
                       </b-col>
                       <b-col cols="5">
@@ -137,7 +137,11 @@
             </b-row>
           </b-container>
         </b-card>
+        
       </b-jumbotron>
+      <div v-if="users.length" v-observe-visibility="{callback: handleScrolledToBottom,
+        throttle: 500, 
+      }"></div>
     </b-container>
   </div>
 </template>
@@ -145,10 +149,12 @@
 <script>
 import axios from "axios";
 export default {
-  name: "tarjeta",
+  name: "VistaUsuarios",
   data() {
     return {
       users: [],
+      page: 0,
+      lastPage: 1,
       dismissSecs: 5,
       dismissCountDown: 0,
       showDismissibleAlert: false,
@@ -174,12 +180,14 @@ export default {
   },
   methods: {
     obtenerUsuarios() {
-      const path = "http://localhost:9090/apimiel/web/usuarios";
+      const path = `http://localhost:9090/apimiel/web/usuarios/page/${this.page}`;
       axios
         .get(path)
         .then((response) => {
-          this.users = response.data;
-          console.log(this.users);
+          this.users.push(...response.data.content)
+          this.lastPage = response.data.totalPages;
+          //this.lastPage = Math.floor(this.users.length/10) + 1;
+          //console.log(this.users);
         })
         .catch((error) => {
           console.log(error);
@@ -192,7 +200,7 @@ export default {
       const path = `http://localhost:9090/apimiel/web/usuarios/eliminar/${id}`;
       axios
         .delete(path)
-        .then((response) => {
+        .then(() => {
           this.obtenerUsuarios();
         })
         .catch((error) => {
@@ -210,6 +218,13 @@ export default {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
+    handleScrolledToBottom(isVisible){
+      if (!isVisible) {return}
+      if (this.page >= this.lastPage) {return}
+      this.page++
+      this.obtenerUsuarios();
+      //console.log('abc');
+    }
   },
   created() {
     this.obtenerUsuarios();

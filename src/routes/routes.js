@@ -72,6 +72,18 @@ const routes = [
         name: 'floraciones',
         component: () => import('../views/MODULO_FLORACIONES/ViewFloraciones.vue')
       },
+      ,
+      {
+        path: '/agregarFloracion',
+        name: 'agregarFloracion',
+        component: () => import('../views/MODULO_FLORACIONES/AgregarAreaFloracion.vue')
+      },
+      {
+        path: '/modificarFloracion/:id',
+        name: 'modificarFloracion',
+        component: () => import('../views/MODULO_FLORACIONES/ModificarAreaFloracion.vue'),
+        props: true
+      },
 
        //RUTAS PARA PRODUCTOS
       {
