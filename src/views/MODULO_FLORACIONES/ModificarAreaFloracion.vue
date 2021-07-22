@@ -28,7 +28,7 @@
           bg-variant="white"
           class="shadow-lg p-5 mb-5 bg-white rounded"
         >
-          <h2 class="text-center fontLabel">Modificar área de floración</h2>
+          <h2 class="text-center fontLabel">Actualizar área de floración</h2>
           <hr class="mt-2 separador" />
           <b-form>
             <b-container>
@@ -183,10 +183,10 @@
               </b-row>
               <b-row>
                 <b-col align="right">
-                  <b-button @click="guardarFormulario(area.idAreasFloracion)" type="submit" variant="guardar" class="text-white"
+                  <b-button @click="guardarFormulario(area.idAreasFloracion)" type="submit" variant="modificar" class="m-2"
                     >Guardar</b-button
                   >
-                  <b-button href="#/floraciones" type="reset" variant="eliminar"
+                  <b-button href="#/floraciones" type="reset" variant="eliminar" class="mr-2"
                     >Cancelar</b-button
                   >
                 </b-col>

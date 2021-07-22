@@ -29,7 +29,7 @@
           bg-variant="white"
           class="shadow-lg p-5 mb-5 bg-white rounded"
         >
-          <h2 class="text-center fontLabel">Modificar Usuario</h2>
+          <h2 class="text-center fontLabel">Actualizar Usuario</h2>
           <hr class="mt-2 separador">
           <b-form v-if="show">
             <b-container>
@@ -107,7 +107,7 @@
               </b-row>
               <b-row align="right" >
                 <b-col align="right" >
-                  <b-button @click="guardarFormulario(users.idUsuario)" type="submit" variant="guardar" class="text-white m-2"
+                  <b-button @click="guardarFormulario(users.idUsuario)" type="submit" variant="modificar" class="m-2"
                     >Guardar</b-button>
                   <b-button class="mr-2" href="#/usuarios" variant="eliminar">Cancelar</b-button>
                 </b-col>

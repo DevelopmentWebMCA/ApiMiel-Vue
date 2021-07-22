@@ -27,14 +27,24 @@
         bg-variant="white"
         class="shadow-lg p-4 m-2 bg-white rounded"
       >
+
+      <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="porPagina"
+          aria-controls="espacio"
+          align="center"
+        ></b-pagination>
       
         <b-card
           id="sombra"
           bg-variant="white"
           text-variant="black"
           class="p-2 mb-5 bg-white rounded cardText"
-          v-for="user in users"
+          v-for="user in paginador(users)"
           v-bind:key="user.idUsuario"
+          :current-page="currentPage"
+          :per-page="porPagina"
         >
           <b-container>
             <b-card-title
@@ -84,7 +94,7 @@
                   variant="modificar"
                   @click="modificarUsuario(user.idUsuario)"
                 >
-                  <b-icon icon="pencil-fill"></b-icon> Modificar</b-button
+                  <b-icon icon="pencil-fill"></b-icon> Actualizar </b-button
                 >
                 <b-button
                   :id="`popover-1-${user.idUsuario}`"
@@ -137,11 +147,19 @@
             </b-row>
           </b-container>
         </b-card>
+
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="porPagina"
+          aria-controls="espacio"
+          align="center"
+        ></b-pagination>
         
       </b-jumbotron>
-      <div v-if="users.length" v-observe-visibility="{callback: handleScrolledToBottom,
+      <!-- <div v-if="users.length" v-observe-visibility="{callback: handleScrolledToBottom,
         throttle: 500, 
-      }"></div>
+      }"></div> -->
     </b-container>
   </div>
 </template>
@@ -152,9 +170,11 @@ export default {
   name: "VistaUsuarios",
   data() {
     return {
+      porPagina: 10,
+      currentPage: 1,
       users: [],
-      page: 0,
-      lastPage: 1,
+      // page: 0,
+      // lastPage: 1,
       dismissSecs: 5,
       dismissCountDown: 0,
       showDismissibleAlert: false,
@@ -180,12 +200,16 @@ export default {
   },
   methods: {
     obtenerUsuarios() {
-      const path = `http://localhost:9090/apimiel/web/usuarios/page/${this.page}`;
+      const path = "http://localhost:9090/apimiel/web/usuarios";
+      // const path = `http://localhost:9090/apimiel/web/usuarios/page/${this.page}`;
       axios
         .get(path)
         .then((response) => {
-          this.users.push(...response.data.content)
-          this.lastPage = response.data.totalPages;
+          this.users.push(...response.data)
+          // this.lastPage = response.data.totalPages;
+          // this.porPagina = response.data.numberOfElements;
+          // this.currentPage = response.data.number;
+          // this.rows = response.data.totalElements;
           //this.lastPage = Math.floor(this.users.length/10) + 1;
           //console.log(this.users);
         })
@@ -218,13 +242,26 @@ export default {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
-    handleScrolledToBottom(isVisible){
-      if (!isVisible) {return}
-      if (this.page >= this.lastPage) {return}
-      this.page++
-      this.obtenerUsuarios();
-      //console.log('abc');
-    }
+    // handleScrolledToBottom(isVisible){
+    //   if (!isVisible) {return}
+    //   if (this.page >= this.lastPage) {return}
+    //   this.page++
+    //   this.obtenerUsuarios();
+    //   //console.log('abc');
+    // },
+    paginador(lista) {
+      const indiceInicio = (this.currentPage - 1) * this.porPagina;
+      const indiceFinal =
+        indiceInicio + this.iporPagina > lista.length
+          ? lista.length
+          : indiceInicio + this.porPagina;
+      return lista.slice(indiceInicio, indiceFinal);
+    },
+  },
+  computed: {
+    rows() {
+      return this.users.length;
+    },
   },
   created() {
     this.obtenerUsuarios();

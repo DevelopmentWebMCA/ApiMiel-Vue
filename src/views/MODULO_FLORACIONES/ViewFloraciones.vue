@@ -30,7 +30,7 @@
           show-empty
           small>
         <template #cell(detalles)="areas">
-          <b-button class="text-white mr-2" variant="guardar" size="sm" @click="areas.toggleDetails">
+          <b-button class="text-white mr-2" variant="primary" size="sm" @click="areas.toggleDetails">
             {{ areas.detailsShowing ? 'Ocultar' : 'Mostrar'}} Detalles
           </b-button>
         </template>
@@ -75,7 +75,7 @@
             <b-col cols="12" align="right">
               <b-button @click="modificarArea(row.item.idAreasFloracion)" variant="modificar" size="sm" >
                 <b-icon icon="pencil-fill"></b-icon>
-                Modificar</b-button>
+                Actualizar</b-button>
             <b-button 
               :id="`popover-1-${row.item.idAreasFloracion}`"
               variant="eliminar" size="sm" 

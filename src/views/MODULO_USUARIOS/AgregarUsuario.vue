@@ -123,8 +123,8 @@
                   <b-button
                     @click="onSubmit()"
                     type="submit"
-                    variant="guardar"
-                    class="text-white m-2"
+                    variant="modificar"
+                    class="m-2"
                     >Guardar</b-button
                   >
                   <b-button class="mr-2" href="#/usuarios" type="reset" variant="eliminar"

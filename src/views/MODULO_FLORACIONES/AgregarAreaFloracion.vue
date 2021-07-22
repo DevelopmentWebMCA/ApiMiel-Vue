@@ -196,7 +196,7 @@
               </b-row>
               <b-row>
                 <b-col align="right">
-                  <b-button  @click="onSubmit()" type="submit" variant="guardar" class="text-white m-2"
+                  <b-button  @click="onSubmit()" type="submit" variant="modificar" class="m-2"
                     >Guardar</b-button
                   >
                   <b-button href="#/floraciones" type="reset" variant="eliminar" class="mr-2"
