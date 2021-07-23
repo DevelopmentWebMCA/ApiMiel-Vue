@@ -91,6 +91,19 @@ const routes = [
         name: 'productos',
         component: () => import('../views/MODULO_PRODUCTOS/ViewProductos.vue')
       },
+      {
+        path: '/agregarProducto',
+        name: 'agregarProducto',
+        component: () => import('../views/MODULO_PRODUCTOS/AgregarProducto.vue')
+      },
+      ,
+      {
+        path: '/modificarProducto/:id',
+        name: 'ModificarProducto',
+        component: () => import('../views/MODULO_PRODUCTOS/ModificarProducto.vue'),
+        props: true
+      },
+
     ]
   },
   {
