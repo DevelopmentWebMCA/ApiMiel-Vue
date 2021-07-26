@@ -3,35 +3,27 @@
     <br />
     <br />
     <b-container fluid class="mt--12">
+
+
+
       <b-alert
-        v-show="alertMsj === true"
+        v-model="alertMsj"
         :show="dismissCountDown"
         dismissible
         fade
-        variant="success"
+        :variant="colorVariante"
         class="position-fixed fixed-top m-0 rounded-0"
         @dismiss-count-down="countDownChanged"
       >
-        Asociacion agregada correctamente
+        Mensaje: {{alerTexto}}
       </b-alert>
-      <b-alert
-          v-show="alertMsj === false"
-          :show="dismissCountDown"
-          dismissible
-          fade
-          variant="warning"
-          class="position-fixed fixed-top m-0 rounded-0"
-          @dismiss-count-down="countDownChanged"
-        >
-          Favor de llenar el formulario
-        </b-alert>
 
       <b-row>
         <b-col>
           <h1>Asociaciones</h1>
         </b-col>
       </b-row>
-
+      
       <b-jumbotron
         bg-variant="white"
         class="shadow-lg p-5 mb-5 bg-white rounded"
@@ -181,8 +173,8 @@
 
         <br />
 
-        <b-row align-h="center">
-          <b-col align-self="center" cols="12" lg="4" xl="4">
+        <b-row >
+          <b-col align="right" >
             <b-button  class="m-1" @click="onSubmit()" type="submit" variant="modificar">Guardar</b-button>
           
             <b-button class="m-1" href="#/asociaciones" variant="eliminar">Cancelar</b-button>
@@ -199,8 +191,10 @@ export default {
   name: "AgregarAsociacion",
   data() {
     return {
-      dismissSecs: 5,
+      dismissSecs: 10,
       alertMsj: false,
+      alerTexto:"",
+      colorVariante:"warning",
       dismissCountDown: 0,
       items: {
         idAsociacion: "",
@@ -229,7 +223,6 @@ export default {
         this.items.correoElectronico &&
         this.items.telefono
       ) {
-        this.alertMsj = true;
         setTimeout(() => this.$router.push({ path: "/asociaciones" }), 2000);
         axios
           .post(path, {
@@ -241,12 +234,19 @@ export default {
             direccion: this.items.direccion,
             correoElectronico: this.items.correoElectronico,
             telefono: this.items.telefono,
+            
           })
-          .then(function (response) {
+          .then( (response) => {
+            this.alerTexto="Asociacion agregada correctamente";
+            this.colorVariante="success";
+            this.alertMsj = true;
+            console.log(this.alerTexto);
             console.log(response);
           })
-          .catch(function (error) {
-            console.log(error);
+          .catch( (error) => {
+            alert("Algo salio mal ("+ error + ")")
+            console.log(this.alerTexto)
+            console.log(error)
           });
       }
       this.dismissCountDown = this.dismissSecs;

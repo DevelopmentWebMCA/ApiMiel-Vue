@@ -16,13 +16,55 @@
         Asociacion eliminada correctamente
       </b-alert>
 
-      <b-row>
+      <b-row align-v="center" class="card-item">
         <!-- SECCION DEL TITULO -->
-        <b-col>
-          <h1>Asociaciones</h1>
+        <b-col align-self="start">
+          <b-card-text class="cardText text-lg-left text-center">
+            <h1>Asociaciones</h1>
+          </b-card-text>
         </b-col>
-        <b-col align="right">
-          <b-button href="#/asociaciones/agregar" variant="primario">
+
+        <b-col align="center" class="mt-lg-0 mt-sm-3">
+          <b-form
+            class="navbar-search form-inline mr-sm-5"
+            :class="{
+              'navbar-search-dark': type === 'default',
+              'navbar-search-light': type === 'light',
+            }"
+            id="navbar-search-main"
+          >
+            <b-form-group class="mb-0">
+              <b-input-group class="input-group-alternative input-group-merge">
+                <b-input-group-prepend>
+                  <div class="input-group-append">
+                  <span class="input-group-text"
+                    ><i class="fas fa-search"></i
+                  ></span>
+                </div>
+                </b-input-group-prepend>
+                
+                <b-input-group-append>
+              <b-form-input
+                  v-model="buscar"
+                  placeholder="Buscar"
+                  type="text"
+                  v-on:keyup.enter="buscarNombre(buscar)"
+                >
+                </b-form-input>
+                <b-button 
+                class="input-group-append" 
+                pill 
+                variant="outline-secondary"
+                @click="buscarNombre(buscar)">Buscar</b-button>
+                </b-input-group-append>
+                
+              </b-input-group>
+            </b-form-group>
+          </b-form>
+        </b-col>
+
+        <b-col align-self="end" class="mt-lg-0 mt-sm-4">
+          <b-button href="#/asociaciones/agregar" variant="primario" block>
             Agregar Asociacion
           </b-button>
         </b-col>
@@ -30,7 +72,7 @@
 
       <b-jumbotron
         bg-variant="white"
-        class="shadow-lg p-5 mb-5 bg-white rounded"
+        class="shadow-lg mt-3 p-5 mb-5 bg-white rounded"
       >
         <!-- CUADRO DONDE VA INFORMACION DE LAS ASOCIACIONES-->
 
@@ -40,8 +82,9 @@
           :per-page="porPagina"
           aria-controls="espacio"
           align="center"
+          size="sm"
         ></b-pagination>
-          <!--  PAGINADOR DE INICIO PARA LIMITAR EL NUMERO DE ASOCIACIONES MOSTRADAS-->
+        <!--  PAGINADOR DE INICIO PARA LIMITAR EL NUMERO DE ASOCIACIONES MOSTRADAS-->
         <b-card
           id="espacio"
           bg-variant="white"
@@ -329,6 +372,7 @@
                   <b-icon icon="trash-fill"></b-icon>
                   Eliminar
                 </b-button>
+
                 <b-popover
                   :target="`popover-1-${item.idAsociacion}`"
                   placement
@@ -350,7 +394,7 @@
                   </div>
 
                   <div class="p-2">
-                    <!-- SECCION PARA E CUERPO DEL POPOVER -->
+                    <!-- SECCION PARA EL CUERPO DEL POPOVER -->
                     <b-alert variant="" show class="small text-center">
                       <strong
                         >¿Desea eliminar la asociacion
@@ -384,6 +428,7 @@
           </b-container>
         </b-card>
         <b-pagination
+          size="sm"
           v-model="currentPage"
           :total-rows="rows"
           :per-page="porPagina"
@@ -408,6 +453,7 @@ export default {
       porPagina: 10,
       currentPage: 1,
       asociacion: {},
+      buscar:"",
       items: [],
       headerTextVariant: "light",
       headerBgVariant: "primary",
@@ -443,6 +489,19 @@ export default {
           alert("ocurrio un error");
         });
       this.dismissCountDown = this.dismissSecs;
+    },
+    buscarNombre(id)
+    {
+      const path = `http://localhost:9090/apimiel/web/asociaciones?nombre=${id}`;
+      axios
+        .get(path)
+        .then((response) => {
+          this.items = response.data;
+          console.log(this.items);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     onClose(id) {
       this.$root.$emit("bv::hide::popover", id);

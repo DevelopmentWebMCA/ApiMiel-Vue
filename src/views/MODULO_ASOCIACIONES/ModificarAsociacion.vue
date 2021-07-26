@@ -4,13 +4,14 @@
     <br />
     <b-container fluid class="mt--12">
         <b-alert
+        v-model="alertMsj"
         :show="dismissCountDown"
         dismissible
         fade
         variant="success"
         class="position-fixed fixed-top m-0 rounded-0"
         @dismiss-count-down="countDownChanged">
-        Asociacion modificada correctamente
+        {{alerTexto}}
       </b-alert>
       <b-row>
         <b-col>
@@ -159,8 +160,8 @@
         <br />
         <br />
 
-        <b-row align-h="center">
-          <b-col align-self="center" cols="12" lg="4" xl="4">
+        <b-row >
+          <b-col align="right">
             <b-button @click="guardarFormulario(items.idAsociacion)" variant="modificar" class="text-white" type="submit">Actualizar</b-button>
           
             <b-button href="#/asociaciones" variant="eliminar">Cancelar</b-button>
@@ -178,8 +179,11 @@ export default {
   name: "ActualizarAsociacion",
   data() {
     return {
-        dismissSecs: 5,
+      dismissSecs: 5,
       dismissCountDown: 0,
+      alertMsj: false,
+      alerTexto:"",
+      colorVariante:"warning",
       items: [],
       id: this.$route.params.id,
       show: true,
@@ -211,11 +215,17 @@ export default {
             correoElectronico: this.items.correoElectronico,
             telefono: this.items.telefono,
         })
-        .then(function (response) {
+        .then((response) => {
                 console.log(response);
+                this.alerTexto="Asociacion agregada correctamente";
+            this.colorVariante="success";
+            this.alertMsj = true;
+            console.log(this.alerTexto);
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                alert("Algo salio mal ("+ error + ")")
+            console.log(this.alerTexto)
+            console.log(error)
             });
      this.dismissCountDown = this.dismissSecs;
      setTimeout( () => this.$router.push({ path: '/asociaciones'}), 2000);
