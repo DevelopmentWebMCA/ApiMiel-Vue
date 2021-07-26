@@ -3,34 +3,38 @@
     <br />
     <br />
     <b-container fluid class="mt--12">
-
-
-
+      <!-- CONTENEDOR PRINCIPAL -->
       <b-alert
-        v-model="alertMsj"
         :show="dismissCountDown"
         dismissible
         fade
         :variant="colorVariante"
         class="position-fixed fixed-top m-0 rounded-0"
+        @dismissed="dismissCountDown = 0"
         @dismiss-count-down="countDownChanged"
       >
-        Mensaje: {{alerTexto}}
+        {{ alerTexto }}
       </b-alert>
+      <!-- ALERTA QUE SE MOSTRARA AL INTENTAR AGREGAR UN NUEVO REGISTRO  -->
 
       <b-row>
         <b-col>
           <h1>Asociaciones</h1>
         </b-col>
       </b-row>
-      
+      <!-- SECCION PARA EL TITULO -->
+
       <b-jumbotron
         bg-variant="white"
         class="shadow-lg p-5 mb-5 bg-white rounded"
       >
+        <!-- SECCION PARA EL CUERPO DEL FORMULARIO -->
         <h2 class="fuente_texto text-center">Agregar asociacion</h2>
         <hr class="separador mt-2" />
+
         <b-row align-h="around">
+          <!-- SECCION PARA ID Y NOMBRE ASOCIACION -->
+
           <b-col cols="12" lg="6" xl="6">
             <b-form>
               <b-form-group
@@ -47,6 +51,7 @@
               </b-form-group>
             </b-form>
           </b-col>
+          <!-- COLUMNA PARA EL ID DE LA ASOCIACION -->
 
           <b-col cols="12" lg="6" xl="6">
             <b-form>
@@ -64,9 +69,11 @@
               </b-form-group>
             </b-form>
           </b-col>
+          <!-- COLUMNA PARA EL NOMBRE DE LA ASOCIACION -->
         </b-row>
 
         <b-row class="" align-h="around">
+          <!-- SECCION PARA TELEFONO Y CODIGO POSTAL DE LA ASOCIACION -->
           <b-col cols="12" lg="6" xl="6">
             <b-form>
               <b-form-group
@@ -83,6 +90,7 @@
               </b-form-group>
             </b-form>
           </b-col>
+          <!-- COLUMNA PARA EL TELEFONO DE LA ASOCIACION -->
           <b-col cols="12" lg="6" xl="6">
             <b-form>
               <b-form-group
@@ -99,9 +107,11 @@
               </b-form-group>
             </b-form>
           </b-col>
+          <!-- COLUMNA PARA EL CODIGO POSTAL DE LA ASOCIACION -->
         </b-row>
 
         <b-row class="" align-h="around">
+          <!-- SECCION PARA CIUDAD Y CORREO ELECTRONICO DE LA ASOCIACION -->
           <b-col cols="12" lg="6" xl="6">
             <b-form>
               <b-form-group
@@ -118,6 +128,7 @@
               </b-form-group>
             </b-form>
           </b-col>
+          <!-- COLUMNA PARA CIUDAD DE LA ASOCIACION -->
           <b-col cols="12" lg="6" xl="6">
             <b-form>
               <b-form-group
@@ -134,9 +145,11 @@
               </b-form-group>
             </b-form>
           </b-col>
+          <!-- COLUMNA PARA EL CORREO ELECTRONICO DE LA ASOCIACION -->
         </b-row>
 
         <b-row class="" align-h="around">
+          <!-- SECCION PARA DIRECCION Y DESCRIPCION DE LA ASOCIACION -->
           <b-col cols="12" lg="6" xl="6">
             <b-form>
               <b-form-group
@@ -153,6 +166,7 @@
               </b-form-group>
             </b-form>
           </b-col>
+          <!-- COLUMNA PARA LA DIRECCION DE LA ASOCIACION -->
           <b-col cols="12" lg="6" xl="6">
             <b-form>
               <b-form-group
@@ -169,15 +183,25 @@
               </b-form-group>
             </b-form>
           </b-col>
+          <!-- COLUMNA PARA LA DESCRIPCION DE LA ASOCIACION -->
         </b-row>
 
         <br />
 
-        <b-row >
-          <b-col align="right" >
-            <b-button  class="m-1" @click="onSubmit()" type="submit" variant="modificar">Guardar</b-button>
-          
-            <b-button class="m-1" href="#/asociaciones" variant="eliminar">Cancelar</b-button>
+        <b-row>
+          <!-- SECCION PARA LOS BOTONES DE GUARDAR Y CANCELAR -->
+          <b-col align="right">
+            <b-button
+              class="m-1"
+              @click="onSubmit()"
+              type="submit"
+              variant="modificar"
+              >Guardar</b-button
+            >
+
+            <b-button class="m-1" href="#/asociaciones" variant="eliminar"
+              >Cancelar</b-button
+            >
           </b-col>
         </b-row>
       </b-jumbotron>
@@ -191,10 +215,10 @@ export default {
   name: "AgregarAsociacion",
   data() {
     return {
-      dismissSecs: 10,
+      dismissSecs: 5,
       alertMsj: false,
-      alerTexto:"",
-      colorVariante:"warning",
+      alerTexto: "",
+      colorVariante: "",
       dismissCountDown: 0,
       items: {
         idAsociacion: "",
@@ -211,6 +235,7 @@ export default {
   },
   methods: {
     onSubmit() {
+      //METODO GUARDAR UN NUEVO REGISTRO
       const path = "http://localhost:9090/apimiel/web/asociaciones/agregar";
 
       if (
@@ -234,24 +259,31 @@ export default {
             direccion: this.items.direccion,
             correoElectronico: this.items.correoElectronico,
             telefono: this.items.telefono,
-            
           })
-          .then( (response) => {
-            this.alerTexto="Asociacion agregada correctamente";
-            this.colorVariante="success";
+          .then((response) => {
+            //EN CASO DE QUE FUNCIONE TODO BIEN, SE MOSTRARA UNA ALERTA DE CONFIRMACION
+            this.alerTexto = "Asociacion agregada correctamente";
+            this.colorVariante = "success";
             this.alertMsj = true;
             console.log(this.alerTexto);
             console.log(response);
           })
-          .catch( (error) => {
-            alert("Algo salio mal ("+ error + ")")
-            console.log(this.alerTexto)
-            console.log(error)
+          .catch((error) => {
+            // EN CASO DE ERROR SE MOSTRARA UNA ALERTA DE ERROR
+            alert("Algo salio mal (" + error + ")");
+            console.log(this.alerTexto);
+            console.log(error);
           });
+      } else {
+        //ALERTA POR SI FALTAN CAMPOS POR LLENAR
+        this.alerTexto = "Campos vacios, favor de llenar el formulario";
+        this.colorVariante = "warning";
+        this.alertMsj = true;
       }
       this.dismissCountDown = this.dismissSecs;
     },
     countDownChanged(dismissCountDown) {
+      //METODO CONTADOR PARA OCULTAR LAS ALERTAS
       this.dismissCountDown = dismissCountDown;
     },
   },

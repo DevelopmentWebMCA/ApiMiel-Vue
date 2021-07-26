@@ -15,10 +15,11 @@
       >
         Asociacion eliminada correctamente
       </b-alert>
+      <!-- ALERTA QUE SE MOSTRARA AL ELIMINAR -->
 
       <b-row align-v="center" class="card-item">
-        <!-- SECCION DEL TITULO -->
-        <b-col align-self="start">
+        <!-- SECCION INIAL PARA EL TITULO, BUSCADOR Y BOTON AGREGAR -->
+        <b-col sm="12" lg="3" xl="3" align-self="start">
           <b-card-text class="cardText text-lg-left text-center">
             <h1>Asociaciones</h1>
           </b-card-text>
@@ -34,36 +35,35 @@
             id="navbar-search-main"
           >
             <b-form-group class="mb-0">
-              <b-input-group class="input-group-alternative input-group-merge">
-                <b-input-group-prepend>
-                  <div class="input-group-append">
-                  <span class="input-group-text"
-                    ><i class="fas fa-search"></i
-                  ></span>
-                </div>
-                </b-input-group-prepend>
-                
+              <b-input-group
+                id="input_buscar"
+                class="input-group-alternative input-group-merge"
+              >
                 <b-input-group-append>
-              <b-form-input
-                  v-model="buscar"
-                  placeholder="Buscar"
-                  type="text"
-                  v-on:keyup.enter="buscarNombre(buscar)"
-                >
-                </b-form-input>
-                <b-button 
-                class="input-group-append" 
-                pill 
-                variant="outline-secondary"
-                @click="buscarNombre(buscar)">Buscar</b-button>
+                  <b-form-input
+                    v-model="buscar"
+                    placeholder="Buscar"
+                    type="text"
+                    v-on:keyup.enter="buscarNombre(buscar)"
+                  >
+                  </b-form-input>
+                  <b-button
+                    id="responsive_busqueda"
+                    class="input-group-append"
+                    pill
+                    variant="outline-secondary"
+                    @click="buscarNombre(buscar)"
+                  >
+                    <b-icon icon="search"></b-icon
+                  ></b-button>
                 </b-input-group-append>
-                
               </b-input-group>
             </b-form-group>
           </b-form>
         </b-col>
+        <!-- COLUMNA PARA EL BUSCADOR -->
 
-        <b-col align-self="end" class="mt-lg-0 mt-sm-4">
+        <b-col sm="12" lg="3" xl="3" align-self="end" class="mt-lg-0 mt-sm-4">
           <b-button href="#/asociaciones/agregar" variant="primario" block>
             Agregar Asociacion
           </b-button>
@@ -113,10 +113,10 @@
                 />
               </b-col>
 
-              <b-col cols="12" lg="3" xl="3">
+              <b-col cols="12" lg="4" xl="3">
                 <!-- COLUMNA DONDE VA LA PRIMERA PARTE DE LA INFORMACION -->
-                <b-card-text class="cardText">
-                  <b-icon icon="shop"></b-icon>
+                <b-card-text class="cardText text-lg-left text-center">
+                  <b-icon icon="building"></b-icon>
                   {{ item.idAsociacion }}
                   <br />
                   <b-icon icon="telephone-fill"></b-icon>
@@ -124,9 +124,9 @@
                 </b-card-text>
               </b-col>
 
-              <b-col lg="5" xl="5">
+              <b-col lg="6" xl="5">
                 <!-- COLUMNA DONDE VA LA SEGUNDA PARTE DE LA INFORMACION -->
-                <b-card-text class="cardText">
+                <b-card-text class="cardText text-lg-left text-center">
                   <b-icon icon="geo-alt-fill"></b-icon>
                   {{ item.ciudad }}
                   <br />
@@ -135,7 +135,7 @@
                 </b-card-text>
               </b-col>
 
-              <b-col align-self="center" cols="12" lg="2" xl="2">
+              <b-col align-self="center" cols="12" lg="12" xl="2">
                 <!-- COLUMNA PARA LOS BOTONES -->
                 <b-button
                   size="sm"
@@ -453,7 +453,7 @@ export default {
       porPagina: 10,
       currentPage: 1,
       asociacion: {},
-      buscar:"",
+      buscar: "",
       items: [],
       headerTextVariant: "light",
       headerBgVariant: "primary",
@@ -465,6 +465,7 @@ export default {
   },
   methods: {
     obtenerAsociaciones() {
+      //METODO PARA OBTENER EL TOTAL DE ASOCIACIONES
       const path = "http://localhost:9090/apimiel/web/asociaciones";
       axios
         .get(path)
@@ -476,6 +477,7 @@ export default {
         });
     },
     modificarAsociacion(id) {
+      //METODO PARA MODIFICAR ASOCIACIONES
       this.$router.push(`/asociaciones/actualizar/${id}`);
     },
     eliminarAsociacion(id) {
@@ -490,8 +492,9 @@ export default {
         });
       this.dismissCountDown = this.dismissSecs;
     },
-    buscarNombre(id)
-    {
+    buscarNombre(
+      id //METODO PARA BUSCAR ASOCIACIONES POR NOMBRE
+    ) {
       const path = `http://localhost:9090/apimiel/web/asociaciones?nombre=${id}`;
       axios
         .get(path)
@@ -504,22 +507,28 @@ export default {
         });
     },
     onClose(id) {
+      //METODO PARA CERRAR EL POPOVER DE ELIMINAR
       this.$root.$emit("bv::hide::popover", id);
     },
     onOpen(id) {
+      //METODO PARA ABRIR EL POPOVER DE ELIMINAR
       this.$root.$emit("bv::hide::popover");
       this.$root.$emit("bv::show::popover", id);
     },
     countDownChanged(dismissCountDown) {
+      //METODO CONTADOR PARA LAS ALERTAS
       this.dismissCountDown = dismissCountDown;
     },
     showModal(id) {
+      //METODO PARA MOSTRAR LA VENTANA MODAL
       this.$root.$emit("bv::show::modal", id);
     },
     hideModal(id) {
+      //METODO PARA OCULTAR EL MODAL
       this.$root.$emit("bv::hide::modal", id);
     },
     paginador(lista) {
+      //METODO PARA MOSTRAR POR PAGINA UN DETERMINADO NUMERO DE ELEMENTOS
       const indiceInicio = (this.currentPage - 1) * this.porPagina;
       const indiceFinal =
         indiceInicio + this.iporPagina > lista.length
@@ -563,5 +572,23 @@ export default {
 }
 #modal_titulo {
   color: #fff;
+}
+
+/* APARTIR DE AQUI ES PARA HACER RESPONSIVO EL BUSCADOR */
+#responsive_busqueda {
+  position: absolute;
+  top: 8%;
+  right: 0%;
+}
+#input_buscar {
+  width: 130%;
+}
+#navbar-search-main {
+  justify-content: center;
+}
+@media (max-width: 580px) {
+  #input_buscar {
+    width: 100%;
+  }
 }
 </style>
