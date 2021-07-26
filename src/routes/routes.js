@@ -35,9 +35,19 @@ const routes = [
 
        //RUTAS PARA APICULTORES
       {
-        path: '/apicultores',
+        path: '/apicultores/:save?',
         name: 'apicultores',
         component: () => import('../views/MODULO_APICULTORES/ViewApicultores.vue')
+      },
+      {
+        path: '/apicultores/form/guardar',
+        name: 'AgregarApicultor',
+        component: () => import('../views/MODULO_APICULTORES/ModificarApicultor.vue')
+      },
+      {
+        path: '/apicultores/form/editar/:id',
+        name: 'EditarApicultor',
+        component: () => import('../views/MODULO_APICULTORES/ModificarApicultor.vue')
       },
 
        //RUTAS PARA POSTS
