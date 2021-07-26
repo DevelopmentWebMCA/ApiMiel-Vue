@@ -248,7 +248,7 @@ export default {
             });
      // alert(JSON.stringify(this.users));
      this.dismissCountDown = this.dismissSecs;
-     setTimeout( () => this.$router.push({ path: '/floraciones'}), 2000);
+     setTimeout( () => this.$router.push({ path: '/floraciones'}), 2500);
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;

@@ -62,9 +62,9 @@
       
     </side-bar>
     <div class="main-content">
-      <base-header class="pb-4 pb-4 pt-2 pt-md-4">
+      <!-- <base-header class="pb-4 pb-4 pt-2 pt-md-4">
 
-    </base-header>
+    </base-header> -->
 
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">

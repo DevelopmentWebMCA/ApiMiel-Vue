@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
+      class="header pb-8 pt-5 pt-lg-5 d-flex align-items-center profile-header"
       style="
         min-height: 600px;
         background-size: cover;
@@ -10,27 +10,17 @@
     >
       <b-container fluid>
         <b-alert
-          v-show="alertMsj === true"
           :show="dismissCountDown"
           dismissible
           fade
-          variant="success"
+          :variant="colorVariante"
           class="position-fixed fixed-top m-0 rounded-0"
+          @dismissed="dismissCountDown = 0"
           @dismiss-count-down="countDownChanged"
         >
-          Área de Floración guardada correctamente
+           {{ alerTexto }}
         </b-alert>
-        <b-alert
-          v-show="alertMsj === false"
-          :show="dismissCountDown"
-          dismissible
-          fade
-          variant="warning"
-          class="position-fixed fixed-top m-0 rounded-0"
-          @dismiss-count-down="countDownChanged"
-        >
-          Favor de llenar el formulario
-        </b-alert>
+
         <b-row>
           <b-col>
             <h1>Áreas de Floración</h1>
@@ -151,7 +141,6 @@
                     label="Periodo de floración:"
                     label-for="input-floracion"
                     class="fontLabel"
-                    
                   >
                     <b-form-input
                       id="input-floracion"
@@ -172,6 +161,8 @@
                     <b-form-input
                       id="input-latitud"
                       class="fontInput"
+                      type="number"
+                      step="any"
                       placeholder="Escribir latitud"
                       v-model="areas.latitud"
                     ></b-form-input>
@@ -189,6 +180,8 @@
                       id="input-longitud"
                       placeholder="Escribir longitud"
                       class="fontInput"
+                      type="number"
+                      step="any"
                       v-model="areas.longitud"
                     ></b-form-input>
                   </b-form-group>
@@ -196,10 +189,18 @@
               </b-row>
               <b-row>
                 <b-col align="right">
-                  <b-button  @click="onSubmit()" type="submit" variant="modificar" class="m-2"
+                  <b-button
+                    @click="onSubmit()"
+                    type="submit"
+                    variant="modificar"
+                    class="m-2"
                     >Guardar</b-button
                   >
-                  <b-button href="#/floraciones" type="reset" variant="eliminar" class="mr-2"
+                  <b-button
+                    href="#/floraciones"
+                    type="reset"
+                    variant="eliminar"
+                    class="mr-2"
                     >Cancelar</b-button
                   >
                 </b-col>
@@ -221,6 +222,8 @@ export default {
     return {
       dismissSecs: 5,
       alertMsj: false,
+      alerTexto: "",
+      colorVariante: "warning",
       dismissCountDown: 0,
       areas: {
         idAreasFloracion: null,
@@ -233,67 +236,81 @@ export default {
         periodoFloracion: "",
         latitud: null,
         longitud: null,
-        actualizacion: null
-      }
+        actualizacion: null,
+      },
     };
   },
-  methods:{
+  methods: {
     onSubmit() {
       const path = "http://localhost:9090/apimiel/web/areasfloracion/agregar";
 
-      if (this.areas.nombreFinca && this.areas.regionEstado && this.areas.familiaFlores && this.areas.especieFlores && this.areas.nombreComun && 
-      this.areas.nombreCientifico && this.areas.periodoFloracion && this.areas.latitud && this.areas.longitud) {
-          this.alertMsj = true;
-          setTimeout(() => this.$router.push({ path: "/floraciones" }), 2000);
-      axios
-        .post(path, {
-        nombreFinca: this.areas.nombreFinca,
-        regionEstado: this.areas.regionEstado,
-        familiaFlores: this.areas.familiaFlores,
-        especieFlores: this.areas.especieFlores,
-        nombreComun: this.areas.nombreComun,
-        nombreCientifico: this.areas.nombreCientifico,
-        periodoFloracion: this.areas.periodoFloracion,
-        latitud: this.areas.latitud,
-        longitud: this.areas.longitud,
-        actualizacion: "2021-07-21T01:45:08.639+00:00"
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        }); 
-
-      } 
+      if (
+        this.areas.nombreFinca &&
+        this.areas.regionEstado &&
+        this.areas.familiaFlores &&
+        this.areas.especieFlores &&
+        this.areas.nombreComun &&
+        this.areas.nombreCientifico &&
+        this.areas.periodoFloracion &&
+        this.areas.latitud &&
+        this.areas.longitud
+      ) {
+        setTimeout(() => this.$router.push({ path: "/floraciones" }), 2000);
+        axios
+          .post(path, {
+            nombreFinca: this.areas.nombreFinca,
+            regionEstado: this.areas.regionEstado,
+            familiaFlores: this.areas.familiaFlores,
+            especieFlores: this.areas.especieFlores,
+            nombreComun: this.areas.nombreComun,
+            nombreCientifico: this.areas.nombreCientifico,
+            periodoFloracion: this.areas.periodoFloracion,
+            latitud: this.areas.latitud,
+            longitud: this.areas.longitud,
+            actualizacion: "2021-07-21T01:45:08.639+00:00",
+          })
+          .then((response) => {
+            this.alerTexto = "Área de floración agregada correctamente";
+            this.colorVariante = "success";
+            this.alertMsj = true;
+            console.log(this.alerTexto);
+            console.log(response);
+            
+          })
+          .catch((error) => {
+            alert("Algo salio mal (" + error + ")");
+            console.log(this.alerTexto);
+            console.log(error);
+          });
+      } else {
+          this.alerTexto = "Campos vacios, favor de llenar el formulario";
+          this.colorVariante = "warning ";
+          this.alertMsj = true; 
+      }
+      
       this.dismissCountDown = this.dismissSecs;
-
-      // alert(JSON.stringify(this.users));
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
-  }
-  }
+  },
+};
 </script>
 
 <style scoped>
-
 .separador {
   border: 1px solid #767676;
   border-radius: 50px;
   background-color: gray;
 }
 
-.fontInput{
-  background-color: #F5F7FF;
-  color: #4283EB;
+.fontInput {
+  background-color: #f5f7ff;
+  color: #4283eb;
 }
 
-.fontLabel{
+.fontLabel {
   color: #767676;
   font-weight: bold;
 }
-
-
 </style>

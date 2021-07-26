@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <br />
+  <div class="p-2">
+      <br />
     <br />
     <b-container fluid>
       <b-alert
@@ -13,20 +13,54 @@
         Usuario eliminado correctamente
       </b-alert>
 
+      <div class="mb-3">
+        <h1 class="mb-3">Usuarios</h1>
       <b-row>
-        <b-col>
-          <h1>Usuarios</h1>
+        <b-col class="mt-lg-0 mt-sm-3" cols="12" md="12" lg="9" xl="9">
+          <b-form
+              class="navbar-search form-inline mr-sm-5"
+              id="navbar-search-main"
+            >
+              <b-form-group class="mb-0">
+                <b-input-group
+                  id="input_buscar"
+                  class="input-group-alternative input-group-merge"
+                >
+                  <b-input-group-append>
+                    <b-form-input
+                      v-model="buscar"
+                      placeholder="Buscar"
+                      type="text"
+                      v-on:keyup.enter="buscarNombre(buscar)"
+                    >
+                    </b-form-input>
+                    <b-button
+                      id="responsive_busqueda"
+                      class="input-group-append"
+                      pill
+                      variant="outline-secondary"
+                      @click="buscarNombre(buscar)"
+                    >
+                      <b-icon icon="search"></b-icon
+                    ></b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </b-form>
         </b-col>
-        <b-col align="right">
-          <b-button href="#/agregarUsuario" variant="primario">
-            Agregar Usuario
+        <b-col  align-self="end" cols="12" md="12" lg="3" xl="3" class="mt-4 mt-lg-0">
+          <b-button block href="#/agregarUsuario" variant="primario">
+            Agregar
           </b-button>
         </b-col>
       </b-row>
+      </div>
+
       <b-jumbotron
         bg-variant="white"
         class="shadow-lg p-4 m-2 bg-white rounded"
       >
+
 
       <b-pagination
           v-model="currentPage"
@@ -34,6 +68,7 @@
           :per-page="porPagina"
           aria-controls="espacio"
           align="center"
+          size="sm"
         ></b-pagination>
       
         <b-card
@@ -87,7 +122,7 @@
                   <b-icon icon="shield-lock-fill"></b-icon> **********
                 </b-card-text>
               </b-col>
-              <b-col align-self="center" cols="12" lg="3" xl="2">
+              <b-col align-self="center" cols="12" lg="3" xl="2" class="mt-sm-2">
                 <b-button
                   size="sm"
                   block
@@ -154,12 +189,10 @@
           :per-page="porPagina"
           aria-controls="espacio"
           align="center"
+          size="sm"
         ></b-pagination>
         
       </b-jumbotron>
-      <!-- <div v-if="users.length" v-observe-visibility="{callback: handleScrolledToBottom,
-        throttle: 500, 
-      }"></div> -->
     </b-container>
   </div>
 </template>
@@ -173,6 +206,7 @@ export default {
       porPagina: 10,
       currentPage: 1,
       users: [],
+      buscar: "",
       // page: 0,
       // lastPage: 1,
       dismissSecs: 5,
@@ -206,12 +240,6 @@ export default {
         .get(path)
         .then((response) => {
           this.users.push(...response.data)
-          // this.lastPage = response.data.totalPages;
-          // this.porPagina = response.data.numberOfElements;
-          // this.currentPage = response.data.number;
-          // this.rows = response.data.totalElements;
-          //this.lastPage = Math.floor(this.users.length/10) + 1;
-          //console.log(this.users);
         })
         .catch((error) => {
           console.log(error);
@@ -232,6 +260,18 @@ export default {
         });
       this.dismissCountDown = this.dismissSecs;
     },
+    buscarNombre(nombre) {
+      const path = `http://localhost:9090/apimiel/web/usuarios?nombre=${nombre}`;
+      axios
+        .get(path)
+        .then((response) => {
+          this.users = response.data;
+           console.log(this.users);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     onClose(id) {
       this.$root.$emit("bv::hide::popover", id);
     },
@@ -242,13 +282,6 @@ export default {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
-    // handleScrolledToBottom(isVisible){
-    //   if (!isVisible) {return}
-    //   if (this.page >= this.lastPage) {return}
-    //   this.page++
-    //   this.obtenerUsuarios();
-    //   //console.log('abc');
-    // },
     paginador(lista) {
       const indiceInicio = (this.currentPage - 1) * this.porPagina;
       const indiceFinal =
