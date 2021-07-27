@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2">
     <br />
     <br />
 
@@ -17,21 +17,13 @@
       </b-alert>
       <!-- ALERTA QUE SE MOSTRARA AL ELIMINAR -->
 
-      <b-row align-v="center" class="card-item">
+      <div class="mb-3">
+        <h1 class="mb-3">Asociaciones</h1>
+      <b-row>
         <!-- SECCION INIAL PARA EL TITULO, BUSCADOR Y BOTON AGREGAR -->
-        <b-col sm="12" lg="3" xl="3" align-self="start">
-          <b-card-text class="cardText text-lg-left text-center">
-            <h1>Asociaciones</h1>
-          </b-card-text>
-        </b-col>
-
-        <b-col align="center" class="mt-lg-0 mt-sm-3">
+        <b-col class="mt-lg-0 mt-sm-3" cols="12" md="12" lg="9" xl="9">
           <b-form
             class="navbar-search form-inline mr-sm-5"
-            :class="{
-              'navbar-search-dark': type === 'default',
-              'navbar-search-light': type === 'light',
-            }"
             id="navbar-search-main"
           >
             <b-form-group class="mb-0">
@@ -63,12 +55,13 @@
         </b-col>
         <!-- COLUMNA PARA EL BUSCADOR -->
 
-        <b-col sm="12" lg="3" xl="3" align-self="end" class="mt-lg-0 mt-sm-4">
+        <b-col cols="12" md="12" lg="3" xl="3" align-self="end" class="mt-lg-0 mt-4">
           <b-button href="#/asociaciones/agregar" variant="primario" block>
-            Agregar Asociacion
+            Agregar 
           </b-button>
         </b-col>
       </b-row>
+      </div>
 
       <b-jumbotron
         bg-variant="white"
@@ -585,6 +578,11 @@ export default {
 }
 #navbar-search-main {
   justify-content: center;
+}
+@media (min-width: 992px) {
+  #navbar-search-main {
+  justify-content: left;
+}
 }
 @media (max-width: 580px) {
   #input_buscar {

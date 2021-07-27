@@ -179,14 +179,14 @@
         <br />
 
         <b-row>
-          <!-- SECCION PARA LOS BOTONES DE ACTUALIZAR Y CANCELAR -->
+          <!-- SECCION PARA LOS BOTONES DE GUARDAR Y CANCELAR -->
           <b-col align="right">
             <b-button
               @click="guardarFormulario(items.idAsociacion)"
               variant="modificar"
               class="text-white"
               type="submit"
-              >Actualizar</b-button
+              >Guardar</b-button
             >
 
             <b-button href="#/asociaciones" variant="eliminar"
