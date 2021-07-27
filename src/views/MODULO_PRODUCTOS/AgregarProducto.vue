@@ -20,34 +20,34 @@
           <h2 class="text-center fontLabel">Agregar Producto</h2>
          <hr class="separador mt-2"/>
 
-      <!--  <form v-on:submit.prevent="agregarProducto">   -->
+ <!-- FORMULARIO  -->
         <form >
             <b-container>
+               <!-- NOMBRE PRODUCTO -->
               <b-row>
                 <b-col cols= "12" lg="6" xl="6">
-                  <b-form>
+            <b-form>
               <b-form-group
-                class="text-start fuente_texto"
+                class="fontLabel"
                 label="Nombre del producto :"
-                label-for="input-1"
-              >
+                label-for="input-medida">
                 <b-form-input
                   id="input-1"
                   v-model="info.nombreProducto"
-                  class="caja_texto"
+                  class="fontInput"
                   placeholder="Ingresa el nombre del producto"
                 ></b-form-input>
               </b-form-group>
             </b-form>
                 </b-col>
+                 <!-- UNIDAD MEDIDA -->
                 <b-col>
                   <b-form>
                <b-form-group
                     id="input-group-medida"
                     label="Unidad de medida:"
                     label-for="input-medida"
-                    class="fontLabel"
-                  >
+                    class="fontLabel">
                     <b-form-input
                       id="input-medida"
                       placeholder="Escribir la unidad de medida"
@@ -59,44 +59,48 @@
                 </b-col>
               </b-row>
               <br />
+               <!-- ID producto -->
               <b-row>
                 <b-col cols= "12" lg="6" xl="6">
-                  <b-form>
-               <b-form-group
-                    id="input-group-descripcion"
-                    label="Descrpcion del producto:"
-                    label-for="input-descripcion"
-                    class="fontLabel"
-                  >
-                    <b-form-input
-                      id="input-descripcion"
-                      placeholder="Escribir región o estado"
-                      class="fontInput"
-                      v-model="info.descripcion"
-                    ></b-form-input>
-                  </b-form-group>
-
+                    <b-form>
                       <b-form-group
                     id="input-group-id"
-                    label="id:"
+                    label="ID del producto:"
                     label-for="input-id"
-                    class="fontLabel"
-                  >
+                    class="fontLabel">
                     <b-form-input
                       id="input-id"
-                      placeholder="E"
+                      placeholder="Escribe el ID del producto"
                       class="fontInput"
                       v-model="info.idProducto"
                     ></b-form-input>
                   </b-form-group>
-
+                </b-form>
+                </b-col>
+                 <!-- Descripcion del producto -->
+                  <b-col>
+                <b-form>
+               <b-form-group
+                    id="input-group-descripcion"
+                    label="Descrpcion del producto:"
+                    label-for="input-descripcion"
+                    class="fontLabel">
+                    <b-form-input
+                      id="input-descripcion"
+                      placeholder="Escribe la descripcion del producto"
+                      class="fontInput"
+                      v-model="info.descripcion">
+                    </b-form-input>
+              </b-form-group>
             </b-form>
                 </b-col>
               </b-row>
                <br />
+                <!-- botones -->
               <b-row aling="rigth">
               <b-col></b-col>
-                <b-button class="m-1" @click="onSubmit()" type="submit" variant="modificar"> Guardar</b-button>
+                <b-button class="m-1" @click="onSubmit()" type="submit" variant="modificar"  
+                href="#/productos"> Guardar</b-button>
                 <b-button class="m-1" href="#/productos" variant="eliminar"> Cancelar</b-button>
               </b-row>
             </b-container>
@@ -157,7 +161,6 @@ export default {
 </script>
 
 <style>
-
 .fontInput{
   background-color: #F5F7FF;
   color: #4283EB;
@@ -172,5 +175,4 @@ export default {
   border-radius: 50px;
   background-color: gray;
 }
-
 </style>

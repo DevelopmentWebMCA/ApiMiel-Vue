@@ -3,6 +3,7 @@
    <br />
      <!-- Modificar a partir de aqui  -->
     <b-container fluid>
+      <!-- Mensaje de alerta "producto eliminado"  -->
       <b-alert
         :show="dismissCountDown"
         dismissible
@@ -13,41 +14,74 @@
         @dismiss-count-down="countDownChanged">
         Producto eliminado correctamente
       </b-alert>
-      <b-row> 
-        <b-col>
-          <h1> Módulo de Productos </h1>
+      
+     <div class="mb-3">
+        <h1 class="mb-3">Modulo de Productos</h1>
+        <b-row>
+
+      <b-col class="mt-lg-0 mt-sm-3" cols="12" md="12" lg="9" xl="9">
+            <b-form
+              class="navbar-search form-inline mr-sm-5"
+              id="navbar-search-main"
+            >
+              <b-form-group class="mb-0">
+                <b-input-group
+                  id="input_buscar"
+                  class="input-group-alternative input-group-merge"
+                >
+                  <b-input-group-append>
+                    <b-form-input
+                      v-model="buscar"
+                      placeholder="Buscar"
+                      type="text"
+                      v-on:keyup.enter="buscarNombre(buscar)"
+                    >
+                    </b-form-input>
+                    <b-button
+                      id="responsive_busqueda"
+                      class="input-group-append"
+                      pill
+                      variant="outline-secondary"
+                      @click="buscarNombre(buscar)"
+                    >
+                      <b-icon icon="search"></b-icon
+                    ></b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </b-form>
+          </b-col>
+
+        <b-col cols="12" md="12" lg="3" xl="3" align-self="end" class="mt-lg-0 mt-4">
+          <b-button variant="primario" href="#/agregarProducto" block> 
+          Agregar 
+          </b-button>
         </b-col>
-      </b-row>
- <b-row>
-        <b-col align="right">
-          <b-button variant="primario" href="#/agregarProducto"> Agregar Producto </b-button>
-        </b-col>
-      </b-row>
-          <b-jumbotron  bg-variant="white" class="shadow-lg p-5 mb-5 bg-white rounded">
-             <b-pagination
+    </b-row>
+     </div>
+
+          <b-jumbotron  bg-variant="white" class="shadow-lg p-5 mb-5 bg-white rounded"
+           >
+           <!-- tarjetas con los datos de los productos  -->
+      
+        <b-pagination
           v-model="currentPage"
           :total-rows="rows"
           :per-page="porPagina"
           aria-controls="espacio"
           align="center"
-        ></b-pagination>
-
-        <div id="demo">
-  <button v-on:click="show = !show">
-    Mostrar/Ocultar
-  </button>
-  <transition name="fade">
-    <p v-if="show">hola</p>
-  </transition>
-</div>
+          size="sm"
+          ></b-pagination>
              <b-card id="tarjet" bg-variant="white"
              text-variant="black" 
+   
              class="p-3 mb-5 bg-white rounded cardText"
              v-for="producto in paginador(productoss)"
              v-bind:key="producto.idProducto"
              :current-page="currentPage"
-             :per-page="porPagina">
-             <b-container>
+             :per-page="porPagina"
+            >
+             <b-container >
                 <b-card-title><h3> {{producto.nombreProducto}} </h3></b-card-title>
                  <b-row align-v="center" class="card-item"> 
                   <b-col align="center" cols="12" md="12" lg="2" xl="2">
@@ -57,7 +91,8 @@
                    </b-col>
 
                     <b-col cols="12" lg="3" xl="3">
-                  <b-icon id="iconos" icon="cash-stack"></b-icon> {{producto.unidadMedida}}
+                  <b-icon id="iconos" icon="cash-stack"
+                  ></b-icon> {{producto.unidadMedida}}
                 </b-col>
                   <b-col align-self="center" lg="4" xl="5">
                       <b-icon id="iconos" icon="card-text"></b-icon> {{producto.descripcion}}
@@ -115,12 +150,14 @@
                  </b-row> 
              </b-container>    
          </b-card>
+         
            <b-pagination
           v-model="currentPage"
           :total-rows="rows"
           :per-page="porPagina"
           aria-controls="espacio"
           align="center"
+          size="sm"
         ></b-pagination>
           </b-jumbotron>
            
@@ -131,7 +168,6 @@
 <script>
 import Vue from "vue";
 import VueClipboard from "vue-clipboard2";
-import BaseHeader from "@/components/BaseHeader";
     import axios from "axios";
     Vue.use(VueClipboard);
     export default { 
@@ -140,15 +176,17 @@ import BaseHeader from "@/components/BaseHeader";
         return{
           porPagina: 10,
           currentPage: 1,
+          buscar: "",
           productoss: [],
           dismissSecs: 5,
       dismissCountDown: 0,
       showDismissibleAlert: false,
       mainProps: { width: 75, height: 75, class: 'm1' }
         };
+       
       },
       props: ["id"],
-      methods: {
+      methods: { 
         obtenerProductos(){
           const path = "http://localhost:9090/apimiel/web/productos";
           axios
@@ -156,11 +194,26 @@ import BaseHeader from "@/components/BaseHeader";
           .then((response) => {
             this.productoss =response.data;
             console.log(this.productoss);
+            
           })
            .catch((error) => {
           console.log(error);
         });
         },
+
+  buscarNombre(id) {
+      const path = `http://localhost:9090/apimiel/web/productos?nombre=${id}`;
+      axios
+        .get(path)
+        .then((response) => {
+          this.productoss = response.data;
+        console.log(this.productoss);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
         modificarProducto(id) {
           this.$router.push(`/modificarProducto/${id}`);
         },
@@ -178,6 +231,7 @@ import BaseHeader from "@/components/BaseHeader";
         onClose(id) {
       this.$root.$emit("bv::hide::popover", id);
     },
+    
         countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
@@ -198,9 +252,7 @@ import BaseHeader from "@/components/BaseHeader";
    created() {
     this.obtenerProductos();
      },
-     show(fade){
-
-     }
+   
     };
 </script>
 
@@ -221,10 +273,26 @@ import BaseHeader from "@/components/BaseHeader";
   box-shadow: 3px 5px 12px 3px gray;
   border-radius: 10px, 10px, 10px, 10px;
 }
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s
+#responsive_busqueda {
+  position: absolute;
+  top: 8%;
+  right: 0%;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0
+#input_buscar {
+  width: 130%;
 }
+#navbar-search-main {
+  justify-content: center;
+}
+@media (min-width: 992px) {
+  #navbar-search-main {
+  justify-content: left;
+}
+}
+@media (max-width: 580px) {
+  #input_buscar {
+    width: 100%;
+  }
+}
+
 </style>
