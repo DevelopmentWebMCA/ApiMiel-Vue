@@ -70,8 +70,8 @@
                 </b-col>
               </b-row>
 
+              <b-col cols= "12" lg="6" xl="6">
               <b-row>
-                <b-col cols= "12" lg="6" xl="6">
                    <b-form-group
                     @submit.stop.prevent
                     id="input-group-descripcion"
@@ -86,17 +86,18 @@
                       v-model="prod.descripcion"
                     ></b-form-input>
                   </b-form-group>
+               
+               </b-row>
                 </b-col>
-                
-              </b-row>
-              <b-row>
+             
                 <b-col align="right">
                   <b-button @click="guardarFormulario(prod.idProducto)" type="submit" variant="modificar" class="text-white"
                     >Guardar</b-button>
                   <b-button href="#/productos" variant="eliminar">Cancelar</b-button>
                 </b-col>
                 
-              </b-row>
+              
+                
             </b-container>
           </b-form>
         </b-jumbotron>
