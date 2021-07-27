@@ -73,9 +73,11 @@
           :fields="fields"
           :current-page="currentPage"
           :per-page="perPage"
-          stacked="xl"
+          :class="stacked"
           responsive
+          sticky-header
           hover
+          bordered
           borderless
           small
           v-model="currentItems"
@@ -227,6 +229,7 @@
 
 <script>
 import axios from "axios";
+import { TablePlugin } from 'bootstrap-vue'
 export default {
   name: "VistaFloraciones",
   data() {
@@ -248,6 +251,9 @@ export default {
       ],
       areas: [],
     };
+  },
+  components:{
+    TablePlugin
   },
   methods: {
     obtenerAreas() {
@@ -323,5 +329,28 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped >
+
+#responsive_busqueda {
+  position: absolute;
+  top: 8%;
+  right: 0%;
+}
+#input_buscar {
+  width: 130%;
+}
+#navbar-search-main {
+  justify-content: center;
+}
+@media (min-width: 992px) {
+  #navbar-search-main {
+    justify-content: left;
+  }
+}
+@media (max-width: 580px) {
+  #input_buscar {
+    width: 100%;
+  }
+}
+
 </style>

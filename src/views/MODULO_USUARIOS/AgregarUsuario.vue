@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
+      class="header pb-8 pt-5 d-flex align-items-center profile-header"
       style="
         min-height: 600px;
         background-size: cover;
@@ -33,7 +33,7 @@
         </b-alert>
         <b-row>
           <b-col>
-            <h1>Usuarios</h1>
+            <h1 class="mb-4">Usuarios</h1>
           </b-col>
         </b-row>
 
@@ -81,20 +81,28 @@
 
               <b-row>
                 <b-col cols="12" lg="6" xl="6">
+
                   <b-form-group
                     @submit.stop.prevent
                     id="input-group-contrasiena"
                     label="Contraseña:"
                     label-for="text-password"
                     class="fontLabel"
-                  >
-                    <b-form-input
-                      type="password"
-                      id="text-password"
-                      v-model="users.contrasenia"
-                      aria-describedby="password-help-block"
-                      class="fontInput"
-                    ></b-form-input>
+                  > 
+                    <b-input-group-append>
+                      <b-form-input
+                        :type="type"
+                        id="text-password"
+                        v-model="users.contrasenia"
+                        aria-describedby="password-help-block"
+                        class="fontInput"
+                        minlength = 8
+                        maxlength = 20
+                      ></b-form-input>
+                      <b-button class="fontInput" type="password" @click="showPassword">
+                        <b-icon :icon="icon"></b-icon>
+                      </b-button>
+                    </b-input-group-append>
                     <b-form-text id="password-help-block">
                       Su contraseña debe tener entre 8 y 20.
                     </b-form-text>
@@ -127,7 +135,11 @@
                     class="m-2"
                     >Guardar</b-button
                   >
-                  <b-button class="mr-2" href="#/usuarios" type="reset" variant="eliminar"
+                  <b-button
+                    class="mr-2"
+                    href="#/usuarios"
+                    type="reset"
+                    variant="eliminar"
                     >Cancelar</b-button
                   >
                 </b-col>
@@ -149,6 +161,8 @@ export default {
       dismissSecs: 5,
       alertMsj: false,
       dismissCountDown: 0,
+      type: "password",
+      icon: "eye",
       users: {
         nombreUsuario: "",
         correoElectronico: "",
@@ -162,36 +176,44 @@ export default {
       show: true,
     };
   },
-  props: {
-    
-  },
+  props: {},
   methods: {
     onSubmit() {
       const path = "http://localhost:9090/apimiel/web/usuarios/agregar";
 
-      if (this.users.nombreUsuario && this.users.correoElectronico && this.users.contrasenia && this.users.rolUsuario.idRol) {
-          this.alertMsj = true;
-          setTimeout(() => this.$router.push({ path: "/usuarios" }), 2000);
-      axios
-        .post(path, {
-          nombreUsuario: this.users.nombreUsuario,
-          correoElectronico: this.users.correoElectronico,
-          contrasenia: this.users.contrasenia,
-          rolUsuario: {
-            idRol: this.users.rolUsuario.idRol,
-          },
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        }); 
-
-      } 
+      if (
+        this.users.nombreUsuario &&
+        this.users.correoElectronico &&
+        this.users.contrasenia &&
+        this.users.rolUsuario.idRol &&
+        this.users.contrasenia >= 8 && 
+        this.users.contrasenia <= 20
+      ) {
+        this.alertMsj = true;
+        setTimeout(() => this.$router.push({ path: "/usuarios" }), 2000);
+        axios
+          .post(path, {
+            nombreUsuario: this.users.nombreUsuario,
+            correoElectronico: this.users.correoElectronico,
+            contrasenia: this.users.contrasenia,
+            rolUsuario: {
+              idRol: this.users.rolUsuario.idRol,
+            },
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
       this.dismissCountDown = this.dismissSecs;
 
       // alert(JSON.stringify(this.users));
+    },
+    showPassword() {
+     this.type = this.type === "password" ? "text" : "password";
+     this.icon = this.icon === "eye" ? "eye-slash" : "eye";
     },
     catalogoRoles() {
       const path = "http://localhost:9090/apimiel/web/roles";

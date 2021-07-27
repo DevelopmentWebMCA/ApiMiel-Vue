@@ -1,6 +1,6 @@
 <template>
   <div class="p-2">
-      <br />
+    <br />
     <br />
     <b-container fluid>
       <b-alert
@@ -86,7 +86,7 @@
               ><h3>{{ user.nombreUsuario }}</h3>
             </b-card-title>
             <b-row align-v="center" class="card-item">
-              <b-col align="center" cols="12" md="12" lg="2" xl="2">
+              <b-col align="center" cols="12" md="12" lg="3" xl="2">
                 <span class="rounded-circle">
                   <img v-if="user.rolUsuario.idRol===1"
                     :src="logoInv"
@@ -105,7 +105,7 @@
                   ></b-img>
                 </span>
               </b-col>
-              <b-col cols="12" lg="4" xl="5">
+              <b-col cols="12" lg="5" xl="5">
                 <b-card-text class="cardText">
                   <b-icon icon="file-person"></b-icon>
                   {{ user.idUsuario }}
@@ -114,7 +114,7 @@
                   {{ user.correoElectronico }}
                 </b-card-text>
               </b-col>
-              <b-col align-self="center" lg="3" xl="3">
+              <b-col align-self="center" lg="4" xl="3">
                 <b-card-text>
                   <b-icon icon="people-fill"></b-icon>
                   {{ user.rolUsuario.nombreRol }}
@@ -122,7 +122,7 @@
                   <b-icon icon="shield-lock-fill"></b-icon> **********
                 </b-card-text>
               </b-col>
-              <b-col align-self="center" cols="12" lg="3" xl="2" class="mt-sm-2">
+              <b-col align-self="center" cols="12" lg="12" xl="2" class="mt-sm-2">
                 <b-button
                   size="sm"
                   block
@@ -306,6 +306,28 @@ export default {
 #sombra {
   box-shadow: 3px 5px 12px 3px gray;
   border-radius: 10px, 10px, 10px, 10px;
+}
+
+#responsive_busqueda {
+  position: absolute;
+  top: 8%;
+  right: 0%;
+}
+#input_buscar {
+  width: 130%;
+}
+#navbar-search-main {
+  justify-content: center;
+}
+@media (min-width: 992px) {
+  #navbar-search-main {
+    justify-content: left;
+  }
+}
+@media (max-width: 580px) {
+  #input_buscar {
+    width: 100%;
+  }
 }
 
 </style>
