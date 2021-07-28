@@ -254,9 +254,6 @@ export default {
       description: "card logo",
     },
   },
-  components: {
-    lineChart,
-  },
   methods: {
     obtenerUsuarios() {
       const path = "http://localhost:9090/apimiel/web/usuarios";
