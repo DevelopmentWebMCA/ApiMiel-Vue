@@ -1,6 +1,4 @@
 <template>
-
-
 <div>
 <b-container fluid>
   <b-card bg-variant="white" text-variant="white">
@@ -26,6 +24,7 @@
   <b-col cols="12" lg="6" xl="6"  >
     <h3> ID apicultor</h3>
     <input 
+    :disabled="desabilitado"
       class="form-control my-2"
         placeholder="Ingrese ID"
         v-model="form.idApicultor"
@@ -117,6 +116,7 @@ export default {
     name:"ModificarApicultor",
     data(){
       return{
+        desabilitado:false,
         form:{
           "idApicultor": null,
           "nombreApicultor": null,
@@ -144,7 +144,7 @@ export default {
       this.getUsuarios();
       if(this.$route.params.Item){
         this.ModoEditar(this.$route.params.Item);
-        this.Mensaje="Editar Apicultor";
+        this.Mensaje="Actualizar Apicultor";
       }else{
         this.Mensaje="Agregar Apicultor";
       }
@@ -169,7 +169,8 @@ export default {
         })
         .catch(err=>console.log(err))
       },
-      ModoEditar(ItemApi){
+      ModoEditar(ItemApi ){
+        this.desabilitado=true;
         this.form.idApicultor=ItemApi.idApicultor;
         this.form.nombreApicultor=ItemApi.nombreApicultor;
         this.form.numeroApiarios=ItemApi.numeroApiarios
@@ -187,6 +188,7 @@ export default {
         return this.$route.params.Item
       },
       Guardar(data){
+        this.desabilitado=false;
         axios.post(this.ApiRest+"apicultores/agregar",data)
           .then(res=>{
             if(res.status===201){

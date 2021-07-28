@@ -1,5 +1,7 @@
 <template>
+
     <div>
+      
     <b-card
         bg-variant="white"
         text-variant="black"
@@ -60,7 +62,7 @@
                    @click="Modificar()"
                 >
                 
-                <b-icon icon="pencil-fill"></b-icon> Modificar</b-button
+                <b-icon icon="pencil-fill"></b-icon>Actualizar</b-button
                 >
             
                 <b-button

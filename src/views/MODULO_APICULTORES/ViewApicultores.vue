@@ -1,5 +1,7 @@
 <template>
   <div>
+    <br />
+    <br />
   <b-container fluid>
       <b-alert
         :show="dismissCountDown"
@@ -11,57 +13,51 @@
       >
         {{Mensaje}}
       </b-alert>
-    <b-row>
-        <b-col>
-          <h1>Apicultor</h1>
-        </b-col>
+    
 
-        <b-col align="center" class="mt-lg-0 mt-sm-3">
+         <div class="mb-3">
+        <h1 class="mb-3">Apicultores</h1>
+      <b-row>
+        <b-col class="mt-lg-0 mt-sm-3" cols="12" md="12" lg="9" xl="9">
           <b-form
-            class="navbar-search form-inline mr-sm-5"
-            :class="{
-              'navbar-search-dark': type === 'default',
-              'navbar-search-light': type === 'light',
-            }"
-            id="navbar-search-main"
-          >
-            <b-form-group class="mb-0 pb-4">
-              <b-input-group class="input-group-alternative input-group-merge">
-                <b-input-group-prepend>
-                  <div class="input-group-append">
-                  <span class="input-group-text"
-                    ><i class="fas fa-search"></i
-                  ></span>
-                </div>
-                </b-input-group-prepend>
-                
-                <b-input-group-append>
-              <b-form-input
-                  v-model="buscar"
-                  placeholder="Buscar"
-                  type="text"
-                  v-on:keyup.enter="buscarNombre()"
+              class="navbar-search form-inline mr-sm-5"
+              id="navbar-search-main"
+            >
+              <b-form-group class="mb-0">
+                <b-input-group
+                  id="input_buscar"
+                  class="input-group-alternative input-group-merge"
                 >
-                </b-form-input>
-                <b-button 
-                class="input-group-append" 
-                pill 
-                variant="outline-secondary"
-                @click="buscarNombre()">Buscar</b-button>
-                </b-input-group-append>
-                
-              </b-input-group>
-            </b-form-group>
-          </b-form>
+                  <b-input-group-append>
+                    <b-form-input
+                      v-model="buscar"
+                      placeholder="Buscar"
+                      type="text"
+                      v-on:keyup.enter="buscarNombre(buscar)"
+                    >
+                    </b-form-input>
+                    <b-button
+                      id="responsive_busqueda"
+                      class="input-group-append"
+                      pill
+                      variant="outline-secondary"
+                      @click="buscarNombre(buscar)"
+                    >
+                      <b-icon icon="search"></b-icon
+                    ></b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </b-form>
         </b-col>
-
-        
-        <b-col align="right" col-12>
-          <b-button  variant="primario" to="/apicultores/form/guardar">
-            Agregar Apicultor
+        <b-col  align-self="end" cols="12" md="12" lg="3" xl="3" class="mt-4 mt-lg-0">
+           <b-button block variant="primario" to="/apicultores/form/guardar">
+            Agregar 
           </b-button>
         </b-col>
       </b-row>
+      </div>
+     
         <b-card fluid class="p-1 mb-4 bg-white rounded cardText" >
           <div v-if="lista">
               <b-row> 
@@ -115,7 +111,7 @@ export default {
       Mensaje:"",
       alertVariant: "",
       ApiRest:"http://localhost:9090/apimiel/web/",
-      buscar: null
+      buscar:""
     }
   },
   created(){
@@ -170,13 +166,20 @@ export default {
       this.Mensaje="Datos guardados correctamente";
       this.alertVariant="success";
     },
-    buscarNombre(){
-       axios.get(this.ApiRest+"apicultores/"+this.buscar)
-      .then(res=>{
-        console.log(res);
-      })
-       .catch(err=>console.log(err))
-    }
+    buscarNombre(
+      id //METODO PARA BUSCAR ASOCIACIONES POR NOMBRE
+    ) {
+      const path = `http://localhost:9090/apimiel/web/apicultores?nombre=${id}`;
+      axios
+        .get(path)
+        .then((response) => {
+          this.lista = response.data;
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   computed:{
     rows() {      
@@ -191,6 +194,27 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+#responsive_busqueda {
+  position: absolute;
+  top: 8%;
+  right: 0%;
+}
+#input_buscar {
+  width: 130%;
+}
+#navbar-search-main {
+  justify-content: center;
+}
+@media (min-width: 992px) {
+  #navbar-search-main {
+  justify-content: left;
+}
+}
+@media (max-width: 580px) {
+  #input_buscar {
+    width: 100%;
+  }
 }
 </style>
 
