@@ -60,7 +60,7 @@
     </b-row>
      </div>
 
-          <b-jumbotron  bg-variant="white" class="shadow-lg p-5 mb-5 bg-white rounded"
+          <b-jumbotron  bg-variant="white" class=""
            >
            <!-- tarjetas con los datos de los productos  -->
       
@@ -74,14 +74,13 @@
           ></b-pagination>
              <b-card id="tarjet" bg-variant="white"
              text-variant="black" 
-   
-             class="p-3 mb-5 bg-white rounded cardText"
+             class="p-2 mb-4 bg-white rounded cardText"
              v-for="producto in paginador(productoss)"
              v-bind:key="producto.idProducto"
              :current-page="currentPage"
              :per-page="porPagina"
             >
-             <b-container >
+            
                 <b-card-title><h3> {{producto.nombreProducto}} </h3></b-card-title>
                  <b-row align-v="center" class="card-item"> 
                   <b-col align="center" cols="12" md="12" lg="2" xl="2">
@@ -89,12 +88,12 @@
                   <b-img id="icono" src="https://image.flaticon.com/icons/png/512/102/102873.png"></b-img>
                   </span>
                    </b-col>
-
-                    <b-col cols="12" lg="3" xl="3">
+                  
+                    <b-col cols="8" lg="2" xl="2">
                   <b-icon id="iconos" icon="cash-stack"
                   ></b-icon> {{producto.unidadMedida}}
                 </b-col>
-                  <b-col align-self="center" lg="4" xl="5">
+                  <b-col align-self="center" lg="6" xl="6">
                       <b-icon id="iconos" icon="card-text"></b-icon> {{producto.descripcion}}
                   </b-col>
                  <b-col align-self="center" cols="12" lg="3" xl="2">
@@ -146,9 +145,8 @@
                   </div>
                 </b-popover>
               </b-col>
-
-                 </b-row> 
-             </b-container>    
+             </b-row> 
+             
          </b-card>
          
            <b-pagination

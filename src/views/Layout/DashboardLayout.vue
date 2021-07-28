@@ -23,7 +23,7 @@
         <sidebar-item
               :link="{
                 name: 'Posts',
-                path: '/*',
+                path: '/posts',
                 icon: 'far fa-newspaper text-grey'
               }">
         </sidebar-item>

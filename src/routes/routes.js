@@ -53,7 +53,7 @@ const routes = [
        //RUTAS PARA POSTS
       {
         path: '/posts',
-        name: 'posts',
+        name: 'Posts',
         component: () => import('../views/MODULO_POSTS/ViewPosts.vue')
       },
 
