@@ -10,26 +10,15 @@
     >
       <b-container fluid>
         <b-alert
-          v-show="alertMsj === true"
           :show="dismissCountDown"
           dismissible
           fade
-          variant="success"
+          :variant="colorVariante"
           class="position-fixed fixed-top m-0 rounded-0"
+          @dismissed="dismissCountDown = 0"
           @dismiss-count-down="countDownChanged"
         >
-          Usuario agregado correctamente
-        </b-alert>
-        <b-alert
-          v-show="alertMsj === false"
-          :show="dismissCountDown"
-          dismissible
-          fade
-          variant="warning"
-          class="position-fixed fixed-top m-0 rounded-0"
-          @dismiss-count-down="countDownChanged"
-        >
-          Favor de llenar el formulario
+           {{ alerTexto }}
         </b-alert>
         <b-row>
           <b-col>
@@ -83,7 +72,6 @@
                 <b-col cols="12" lg="6" xl="6">
 
                   <b-form-group
-                    @submit.stop.prevent
                     id="input-group-contrasiena"
                     label="Contraseña:"
                     label-for="text-password"
@@ -162,6 +150,8 @@ export default {
       alertMsj: false,
       dismissCountDown: 0,
       type: "password",
+      alerTexto: "",
+      colorVariante: "warning",
       icon: "eye",
       users: {
         nombreUsuario: "",
@@ -186,10 +176,9 @@ export default {
         this.users.correoElectronico &&
         this.users.contrasenia &&
         this.users.rolUsuario.idRol &&
-        this.users.contrasenia >= 8 && 
-        this.users.contrasenia <= 20
-      ) {
-        this.alertMsj = true;
+        this.users.contrasenia.length >= 8 &&
+        this.users.contrasenia.length <= 20
+      ){
         setTimeout(() => this.$router.push({ path: "/usuarios" }), 2000);
         axios
           .post(path, {
@@ -200,12 +189,22 @@ export default {
               idRol: this.users.rolUsuario.idRol,
             },
           })
-          .then(function (response) {
+          .then((response) => {
+            this.alerTexto = "Usuario agregado correctamente";
+            this.colorVariante = "success";
+            this.alertMsj = true;
+            console.log(this.alerTexto);
             console.log(response);
           })
-          .catch(function (error) {
+          .catch((error) => {
+            alert("Algo salio mal (" + error + ")");
+            console.log(this.alerTexto);
             console.log(error);
           });
+      } else {
+          this.alerTexto = "Campos vacios, favor de llenar el formulario";
+          this.colorVariante = "warning ";
+          this.alertMsj = true; 
       }
       this.dismissCountDown = this.dismissSecs;
 

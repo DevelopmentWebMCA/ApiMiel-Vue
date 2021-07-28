@@ -9,15 +9,16 @@
         fade
         variant="eliminar"
         class="position-fixed fixed-top m-0 rounded-0"
-        @dismiss-count-down="countDownChanged">
+        @dismiss-count-down="countDownChanged"
+      >
         Usuario eliminado correctamente
       </b-alert>
 
       <div class="mb-3">
         <h1 class="mb-3">Usuarios</h1>
-      <b-row>
-        <b-col class="mt-lg-0 mt-sm-3" cols="12" md="12" lg="9" xl="9">
-          <b-form
+        <b-row>
+          <b-col class="mt-lg-0 mt-sm-3" cols="12" md="12" lg="9" xl="9">
+            <b-form
               class="navbar-search form-inline mr-sm-5"
               id="navbar-search-main"
             >
@@ -47,22 +48,27 @@
                 </b-input-group>
               </b-form-group>
             </b-form>
-        </b-col>
-        <b-col  align-self="end" cols="12" md="12" lg="3" xl="3" class="mt-4 mt-lg-0">
-          <b-button block href="#/agregarUsuario" variant="primario">
-            Agregar
-          </b-button>
-        </b-col>
-      </b-row>
+          </b-col>
+          <b-col
+            align-self="end"
+            cols="12"
+            md="12"
+            lg="3"
+            xl="3"
+            class="mt-4 mt-lg-0"
+          >
+            <b-button block href="#/agregarUsuario" variant="primario">
+              Agregar
+            </b-button>
+          </b-col>
+        </b-row>
       </div>
 
       <b-jumbotron
         bg-variant="white"
         class="shadow-lg p-4 m-2 bg-white rounded"
       >
-
-
-      <b-pagination
+        <b-pagination
           v-model="currentPage"
           :total-rows="rows"
           :per-page="porPagina"
@@ -70,7 +76,7 @@
           align="center"
           size="sm"
         ></b-pagination>
-      
+
         <b-card
           id="sombra"
           bg-variant="white"
@@ -88,17 +94,20 @@
             <b-row align-v="center" class="card-item">
               <b-col align="center" cols="12" md="12" lg="3" xl="2">
                 <span class="rounded-circle">
-                  <img v-if="user.rolUsuario.idRol===1"
+                  <img
+                    v-if="user.rolUsuario.idRol === 1"
                     :src="logoInv"
                     alt="img investigador"
                     v-bind="mainProps"
                   />
-                  <b-img v-if="user.rolUsuario.idRol===2"
+                  <b-img
+                    v-if="user.rolUsuario.idRol === 2"
                     :src="logoAdm"
                     alt="img administrador"
                     v-bind="mainProps"
                   ></b-img>
-                  <b-img v-if="user.rolUsuario.idRol===3"
+                  <b-img
+                    v-if="user.rolUsuario.idRol === 3"
                     :src="logoApi"
                     alt="img apicultor"
                     v-bind="mainProps"
@@ -122,15 +131,21 @@
                   <b-icon icon="shield-lock-fill"></b-icon> **********
                 </b-card-text>
               </b-col>
-              <b-col align-self="center" cols="12" lg="12" xl="2" class="mt-sm-2">
+              <b-col
+                align-self="center"
+                cols="12"
+                lg="12"
+                xl="2"
+                class="mt-sm-2"
+              >
                 <b-button
                   size="sm"
                   block
                   variant="modificar"
                   @click="modificarUsuario(user.idUsuario)"
                 >
-                  <b-icon icon="pencil-fill"></b-icon> Actualizar </b-button
-                >
+                  <b-icon icon="pencil-fill"></b-icon> Actualizar
+                </b-button>
                 <b-button
                   :id="`popover-1-${user.idUsuario}`"
                   size="sm"
@@ -142,37 +157,45 @@
                   <b-icon icon="trash-fill"></b-icon>
                   Eliminar
                 </b-button>
-                <b-popover :target="`popover-1-${user.idUsuario}`" placement triggers="">
+                <b-popover
+                  :target="`popover-1-${user.idUsuario}`"
+                  placement
+                  triggers=""
+                >
                   <div class="p-2">
                     <template>
-                    <b-button
-                      @click="onClose(`popover-1-${user.idUsuario}`)"
-                      class="close"
-                      aria-label="Close"
-                    >
-                      <span class="d-inline-block">&times;</span>
-                    </b-button>
-                    <strong>Eliminar usuario</strong>
-                  </template>
+                      <b-button
+                        @click="onClose(`popover-1-${user.idUsuario}`)"
+                        class="close"
+                        aria-label="Close"
+                      >
+                        <span class="d-inline-block">&times;</span>
+                      </b-button>
+                      <strong>Eliminar usuario</strong>
+                    </template>
                   </div>
 
                   <div class="p-2">
                     <b-alert variant="" show class="small text-center p-1">
-                      ¿Desea eliminar el usuario <strong>{{user.nombreUsuario}}</strong>?<br />
+                      ¿Desea eliminar el usuario
+                      <strong>{{ user.nombreUsuario }}</strong
+                      >?<br />
                     </b-alert>
                     <b-row align-h="center">
                       <b-col cols="5">
                         <b-button
                           size="sm"
                           variant="primary"
-                          @click="onClose(`popover-1-${user.idUsuario}`)">Cancelar</b-button
+                          @click="onClose(`popover-1-${user.idUsuario}`)"
+                          >Cancelar</b-button
                         >
                       </b-col>
                       <b-col cols="5">
                         <b-button
                           size="sm"
                           variant="eliminar"
-                          @click="eliminarUsuario(user.idUsuario)">Eliminar</b-button
+                          @click="eliminarUsuario(user.idUsuario)"
+                          >Eliminar</b-button
                         >
                       </b-col>
                     </b-row>
@@ -191,7 +214,6 @@
           align="center"
           size="sm"
         ></b-pagination>
-        
       </b-jumbotron>
     </b-container>
   </div>
@@ -199,6 +221,7 @@
 
 <script>
 import axios from "axios";
+import lineChart from "line-chart";
 export default {
   name: "VistaUsuarios",
   data() {
@@ -212,25 +235,28 @@ export default {
       dismissSecs: 5,
       dismissCountDown: 0,
       showDismissibleAlert: false,
-      mainProps: { width: 75, height: 75, class: 'm1' }
+      mainProps: { width: 75, height: 75, class: "m1" },
     };
   },
   props: {
     logoInv: {
-        type: String,
-        default: 'img/brand/investigador.png',
-        description: 'card logo'
-      },
-      logoAdm: {
-        type: String,
-        default: 'img/brand/admin.png',
-        description: 'card logo'
-      },
-      logoApi: {
-        type: String,
-        default: 'img/brand/apicultor.png',
-        description: 'card logo'
-      },
+      type: String,
+      default: "img/brand/investigador.png",
+      description: "card logo",
+    },
+    logoAdm: {
+      type: String,
+      default: "img/brand/admin.png",
+      description: "card logo",
+    },
+    logoApi: {
+      type: String,
+      default: "img/brand/apicultor.png",
+      description: "card logo",
+    },
+  },
+  components: {
+    lineChart,
   },
   methods: {
     obtenerUsuarios() {
@@ -239,7 +265,7 @@ export default {
       axios
         .get(path)
         .then((response) => {
-          this.users.push(...response.data)
+          this.users = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -266,7 +292,7 @@ export default {
         .get(path)
         .then((response) => {
           this.users = response.data;
-           console.log(this.users);
+          console.log(this.users);
         })
         .catch((error) => {
           console.log(error);
@@ -275,9 +301,9 @@ export default {
     onClose(id) {
       this.$root.$emit("bv::hide::popover", id);
     },
-    onOpen(id){
-      this.$root.$emit('bv::hide::popover')
-      this.$root.$emit('bv::show::popover', id);
+    onOpen(id) {
+      this.$root.$emit("bv::hide::popover");
+      this.$root.$emit("bv::show::popover", id);
     },
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
@@ -329,5 +355,4 @@ export default {
     width: 100%;
   }
 }
-
 </style>

@@ -73,7 +73,7 @@
           :fields="fields"
           :current-page="currentPage"
           :per-page="perPage"
-          :class="stacked"
+          stacked="md"
           responsive
           sticky-header
           hover
