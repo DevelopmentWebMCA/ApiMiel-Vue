@@ -221,7 +221,6 @@
 
 <script>
 import axios from "axios";
-import lineChart from "line-chart";
 export default {
   name: "VistaUsuarios",
   data() {
