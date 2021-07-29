@@ -158,7 +158,6 @@
           size="sm"
         ></b-pagination>
           </b-jumbotron>
-           
   </b-container>
   </div> 
 </template>

@@ -56,6 +56,17 @@ const routes = [
         name: 'Posts',
         component: () => import('../views/MODULO_POSTS/ViewPosts.vue')
       },
+      {
+        path: '/posts/agregar',
+        name: 'PostAgregar',
+        component: () => import('../views/MODULO_ASOCIACIONES/AgregarAsociacion.vue')
+      },
+      {
+        path: '/posts/actualizar/:id',
+        name: 'PostsModificar',
+        component: () => import('../views/MODULO_ASOCIACIONES/ModificarAsociacion.vue'),
+        props:true
+      },
 
        //RUTAS PARA USUARIOS
       {
