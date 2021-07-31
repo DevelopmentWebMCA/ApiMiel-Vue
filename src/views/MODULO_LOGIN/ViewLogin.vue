@@ -35,7 +35,9 @@
                               placeholder="Contraseña"
                               v-model="contrasenia">
                   </base-input>
-
+  <b-alert show  variant="danger" v-if="visibleError">
+    Datos incorrectos
+  </b-alert>
                   <div class="text-center">
                     <b-button  pill  native-type="submit" v-on:click="login()" class="my-4" style="background-color:#FFD875; color:white;">Acceder</b-button>
                   </div>
@@ -52,14 +54,14 @@
 
 import axios from 'axios'
   export default {
-
     data() {
       return {
 
-
+        visibleError: false,
+        camposVacios: false,
         auth: {
-          nombreUsuario: 'Usuario5',
-          contrasenia: '12345678',
+          nombreUsuario: '',
+          contrasenia: '',
         }
 
 
@@ -86,10 +88,12 @@ import axios from 'axios'
         }).then(function(response) {
         }).catch(function(error) {
           if(error.message === "Request failed with status code 401"){
-            alert("Datos incorrectos");
+            visibleError = true;
           }else{
             //this.$router.push("/asociaciones");
+            visibleError = false;
             window.location = '/#/asociaciones'
+
           }
 
         });
