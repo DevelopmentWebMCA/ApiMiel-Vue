@@ -20,10 +20,10 @@
                   <base-input alternative
                               class="mb-3"
                               name="usuario"
-                              :rules="{required: true, email: true}"
+                              :rules="{required: true, email: false}"
                               prepend-icon="fas fa-user"
                               placeholder="Usuario"
-                              v-model="model.email">
+                              v-model="nombreUsuario">
                   </base-input>
 <!-- En :rules min:6 se puede definir la cantidad de caracteres minima para ingresar -->
                   <base-input alternative
@@ -33,11 +33,11 @@
                               prepend-icon="ni ni-lock-circle-open"
                               type="password"
                               placeholder="Contraseña"
-                              v-model="model.password">
+                              v-model="contrasenia">
                   </base-input>
 
                   <div class="text-center">
-                    <b-button  pill  native-type="submit" class="my-4" @click ="onSubmit()" style="background-color:#FFD875; color:white;">Acceder</b-button>
+                    <b-button  pill  native-type="submit" v-on:click="login()" class="my-4" style="background-color:#FFD875; color:white;">Acceder</b-button>
                   </div>
                 </b-form>
               </validation-observer><br>
@@ -52,40 +52,67 @@
 
 import axios from 'axios'
   export default {
+
     data() {
       return {
-        model: {
-          email: '',
-          password: '',
+
+
+        auth: {
+          nombreUsuario: 'Usuario5',
+          contrasenia: '12345678',
         }
+
+
+
       };
     },
     methods: {
-      onSubmit() {
 
-      axios.get('https://jsonplaceholder.typicode.com/todos/1').then( function(response) { 
-        console.log(response.data)
 
-      })       
-      }
+      login(){
+        var session_url = 'http://localhost:9090/';
+
+        axios.post(session_url, {
+
+          headers : {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        }, {
+          auth: {
+            username: this.nombreUsuario,
+            password: this.contrasenia
+          }
+        }).then(function(response) {
+        }).catch(function(error) {
+          if(error.message === "Request failed with status code 401"){
+            alert("Datos incorrectos");
+          }else{
+            //this.$router.push("/asociaciones");
+            window.location = '/#/asociaciones'
+          }
+
+        });
+              },
+
     }
-  };
+          };
 </script>
 <style scoped>
 
 .img {
 
-  width:650px; 
+  width:650px;
   height:320px;
 }
 @media (max-width: 768px) {
     .img {
-          width:300px; 
+          width:300px;
           height:200px;
     }
 
-    .login 
-  
+    .login
+
     {
       width: 300px;
     }

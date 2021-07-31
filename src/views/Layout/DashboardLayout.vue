@@ -10,7 +10,7 @@
           }"
         >
         </sidebar-item>
-      
+
         <sidebar-item
             :link="{
               name: 'Asociaciones',
@@ -42,7 +42,7 @@
                   path: '/usuarios',
                   icon: 'fas fa-users text-grey'
                 }">
-        </sidebar-item> 
+        </sidebar-item>
    <sidebar-item
                 :link="{
                   name: 'Areas de floración',
@@ -59,8 +59,8 @@
         </sidebar-item><br>
        <center><b-button  pill  native-type="submit" class="my-4" @click ="cerrarSesion()" style="background-color:#FFD875; color:white; width:80%">Cerrar sesión</b-button></center>
       </template>
-     
-      
+
+
     </side-bar>
     <div class="main-content">
       <!-- <base-header class="pb-4 pb-4 pt-2 pt-md-4">
@@ -77,12 +77,14 @@
     </div>
   </div>
 </template>
+
 <script>
   /* eslint-disable no-new */
   import PerfectScrollbar from 'perfect-scrollbar';
   import 'perfect-scrollbar/css/perfect-scrollbar.css';
-  
-  
+  import axios from 'axios';
+
+
 
   function hasElement(className) {
     return document.getElementsByClassName(className).length > 0;
@@ -123,7 +125,23 @@ import SidebarItem from '../../components/SidebarPlugin/SidebarItem.vue';
       },
 
       cerrarSesion(){
+        var session_url = 'http://localhost:9090/logout';
 
+        axios.post(session_url, {
+
+          headers : {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+          }
+        }, {
+
+        }).then(function(response) {
+
+        }).catch(function(error) {
+
+
+        });
+        window.location = '/'
 
       }
     },

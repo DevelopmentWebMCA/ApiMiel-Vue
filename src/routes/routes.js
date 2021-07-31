@@ -6,7 +6,7 @@ import NotFound from '@/views/NotFoundPage.vue';
 const routes = [
   {
     path: '/',
-    redirect: 'dashboard',
+    redirect: 'login',
     component: DashboardLayout,
     children: [
       {
@@ -141,5 +141,13 @@ const routes = [
     ]
   }
 ];
+
+beforeEnter: (to, from, next) => {
+  if (store.state.loggedIn == false) {
+      next(false);
+  } else {
+      next();
+  }
+}
 
 export default routes;
