@@ -56,9 +56,10 @@
                   path: '/productos',
                   icon: 'fas fa-utensils text-grey'
                 }">
-        </sidebar-item>
+        </sidebar-item><br>
+       <center><b-button  pill  native-type="submit" class="my-4" @click ="cerrarSesion()" style="background-color:#FFD875; color:white; width:80%">Cerrar sesión</b-button></center>
       </template>
-
+     
       
     </side-bar>
     <div class="main-content">
@@ -102,6 +103,7 @@
   import ContentFooter from './ContentFooter.vue';
   import DashboardContent from './Content.vue';
   import { FadeTransition } from 'vue2-transitions';
+import SidebarItem from '../../components/SidebarPlugin/SidebarItem.vue';
 
 
   export default {
@@ -109,7 +111,8 @@
       DashboardNavbar,
       ContentFooter,
       DashboardContent,
-      FadeTransition
+      FadeTransition,
+        SidebarItem
     },
     methods: {
       initScrollbar() {
@@ -117,6 +120,11 @@
         if (isWindows) {
           initScrollbar('sidenav');
         }
+      },
+
+      cerrarSesion(){
+
+
       }
     },
     mounted() {

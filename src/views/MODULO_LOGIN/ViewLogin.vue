@@ -37,7 +37,7 @@
                   </base-input>
 
                   <div class="text-center">
-                    <b-button  pill  native-type="submit" class="my-4" style="background-color:#FFD875; color:white;">Acceder</b-button>
+                    <b-button  pill  native-type="submit" class="my-4" @click ="onSubmit()" style="background-color:#FFD875; color:white;">Acceder</b-button>
                   </div>
                 </b-form>
               </validation-observer><br>
@@ -49,6 +49,8 @@
   </div>
 </template>
 <script>
+
+import axios from 'axios'
   export default {
     data() {
       return {
@@ -60,7 +62,11 @@
     },
     methods: {
       onSubmit() {
-        // this will be called only after form is valid. You can do api call here to login
+
+      axios.get('https://jsonplaceholder.typicode.com/todos/1').then( function(response) { 
+        console.log(response.data)
+
+      })       
       }
     }
   };
