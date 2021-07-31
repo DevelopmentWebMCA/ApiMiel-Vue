@@ -2,7 +2,7 @@
 <template>
   <div>
     <br />
-     <!-- Modificar a partir de aqui  -->
+    <!-- Modificar a partir de aqui  -->
     <b-container fluid class="mt--12">
       <b-alert
         :show="dismissCountDown"
@@ -10,16 +10,15 @@
         fade
         variant="success"
         class="position-fixed fixed-top m-0 rounded-0"
-        
-        @dismiss-count-down="countDownChanged">
+        @dismiss-count-down="countDownChanged"
+      >
         Producto eliminado correctamente
       </b-alert>
 
-         <div class="mb-3">
-          <h1 class="mb-3"> Módulo de Publicaciones </h1>
-     <b-row>
-      <b-col class="mt-lg-0 mt-sm-3" cols="12" md="12" lg="9" xl="9">
-
+      <div class="mb-3">
+        <h1 class="mb-3">Módulo de Publicaciones</h1>
+        <b-row>
+          <b-col class="mt-lg-0 mt-sm-3" cols="12" md="12" lg="9" xl="9">
             <b-form
               class="navbar-search form-inline mr-sm-5"
               id="navbar-search-main"
@@ -52,62 +51,75 @@
             </b-form>
           </b-col>
 
-        <b-col cols="12" md="12" lg="3" xl="3" align-self="end" class="mt-lg-0 mt-4">
-          <b-button variant="primario" href="#/agregarPost" block> 
-          Agregar 
-          </b-button>
-        </b-col>
-     </b-row>
+          <b-col
+            cols="12"
+            md="12"
+            lg="3"
+            xl="3"
+            align-self="end"
+            class="mt-lg-0 mt-4"
+          >
+            <b-button variant="primario" href="#/posts/agregar" block>
+              Agregar
+            </b-button>
+          </b-col>
+        </b-row>
       </div>
-    <b-pagination
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="porPagina"
-          aria-controls="espacio"
-          align="center"
-          size="sm"
-          ></b-pagination>
-<br />
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="porPagina"
+        aria-controls="espacio"
+        align="center"
+        size="sm"
+      ></b-pagination>
+      <br />
 
-
-<div >
- <form class="row" >
-    <b-card deck
-    id="tarjeta" bg-variant="white"
-    class="p-3 mb-3 bg-white rounded mr-3"
-       v-for="post in paginador(postss)"
-             v-bind:key="post.idPost"
-             :current-page="currentPage"
-             :per-page="porPagina">
-       <container>
-      <b-card-title>PUBLICACION</b-card-title>
-     <b-row>
-                <div class="col-4">  
+      <div >
+        <form class="row" id="contenedor">
+          <b-card
+            deck
+            id="tarjeta"
+            bg-variant="white"
+            class="p-3 mb-3 bg-white rounded mr-3"
+            v-for="post in paginador(postss)"
+            v-bind:key="post.idPost"
+            :current-page="currentPage"
+            :per-page="porPagina"
+          >
+            <b-container>
+              <b-card-title>PUBLICACION</b-card-title>
+              <b-row>
+                <div class="col-4">
                   <span class="rounded-circle">
-                  <b-img id="icono" src="https://image.flaticon.com/icons/png/512/1999/1999310.png"></b-img>
+                    <b-img
+                      id="icono"
+                      src="https://image.flaticon.com/icons/png/512/1999/1999310.png"
+                    ></b-img>
                   </span>
-                   </div>
-                   <div class="col-4">
-                  <b-icon id="iconos" icon="calendar2-day"
-                  ></b-icon> {{post.fechaCreacion}}
                 </div>
                 <div class="col-4">
-                  <b-icon id="iconos" icon="calendar2-day">
-                  </b-icon>{{post.fechaModificacion}}
+                  <b-icon id="iconos" icon="calendar2-day"></b-icon>
+                  {{ post.fechaCreacion }}
                 </div>
-                <br /> <br />
-                </b-row>
-                <b-row>{{post.contenido}} </b-row>
+                <div class="col-4">
+                  <b-icon id="iconos" icon="calendar2-day"> </b-icon
+                  >{{ post.fechaModificacion }}
+                </div>
+                <br />
+                <br />
+              </b-row>
+              <b-row>{{ post.contenido }} </b-row>
 
-                 <br>
-<b-row align-self="center" cols="12" lg="3" xl="2">
+              <br />
+              <b-row align-self="center" cols="12" lg="3" xl="2">
                 <b-button
                   size="sm"
                   block
                   variant="modificar"
                   @click="modificarPost(post.idPost)"
                 >
-                  <b-icon icon="pencil-fill"></b-icon> Modificar</b-button
+                  <b-icon icon="pencil-fill"></b-icon> Actualizar</b-button
                 >
                 <b-button
                   :id="`popover-1-${post.idPost}`"
@@ -148,10 +160,10 @@
                   </div>
                 </b-popover>
               </b-row>
-                </container>
-    </b-card>
-</form>
-<b-pagination
+            </b-container>
+          </b-card>
+        </form>
+        <b-pagination
           v-model="currentPage"
           :total-rows="rows"
           :per-page="porPagina"
@@ -159,81 +171,80 @@
           align="center"
           size="sm"
         ></b-pagination>
- </div>
+      </div>
     </b-container>
   </div>
 </template>
 
 <script>
-    import Vue from "vue";
+import Vue from "vue";
 import VueClipboard from "vue-clipboard2";
-    import axios from "axios";
-import Card from '../../components/Cards/Card.vue';
-    Vue.use(VueClipboard);
-    export default {
-  components: { Card }, 
-     name: "VistaPosts",
-      data(){
-        return{
-          porPagina: 10,
-          currentPage: 1,
-          buscar: "",
-          postss: [],
-          dismissSecs: 5,
+import axios from "axios";
+import Card from "../../components/Cards/Card.vue";
+Vue.use(VueClipboard);
+export default {
+  components: { Card },
+  name: "VistaPosts",
+  data() {
+    return {
+      porPagina: 10,
+      currentPage: 1,
+      buscar: "",
+      postss: [],
+      dismissSecs: 5,
       dismissCountDown: 0,
       showDismissibleAlert: false,
-      mainProps: { width: 75, height: 75, class: 'm1' }
-        };
-       
-      },
-      props: ["id"],
-      methods: { 
-        obtenerPosts(){
-          const path = "http://localhost:9090/apimiel/web/notas";
-          axios
-          .get(path)
-          .then((response) => {
-            this.postss =response.data;
-            console.log(this.postss);
-            
-          })
-           .catch((error) => {
-          console.log(error);
-        });
-        },
-
-  buscarNombre(id) {
-      const path = `http://localhost:9090/apimiel/web/notas?nombre=${id}`;
+      mainProps: { width: 75, height: 75, class: "m1" },
+    };
+  },
+  props: ["id"],
+  methods: {
+    obtenerPosts() {
+      const path = "http://localhost:9090/apimiel/web/notas";
       axios
         .get(path)
         .then((response) => {
           this.postss = response.data;
-        console.log(this.postss);
+          console.log(this.postss);
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-        modificarPost(id) {
-          this.$router.push(`/modificar/${id}`);
-        },
-        eliminarPost(id){
-          const path =  `http://localhost:9090/apimiel/web/notas/eliminar/${id}`;
-          axios.delete(path)
-          .then((response) => {
+    buscarNombre(id) {
+      const path = `http://localhost:9090/apimiel/web/notas?nombre=${id}`;
+      axios
+        .get(path)
+        .then((response) => {
+          this.postss = response.data;
+          console.log(this.postss);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    modificarPost(id) {
+      this.$router.push(`posts/actualizar/${id}`);
+    },
+    eliminarPost(id) {
+      const path = `http://localhost:9090/apimiel/web/notas/eliminar/${id}`;
+      axios
+        .delete(path)
+        .then((response) => {
           this.obtenerPosts();
         })
-        .catch ((error) => {  
-           alert("ocurrio un error"); 
+        .catch((error) => {
+          alert("ocurrio un error");
         });
-        this.dismissCountDown = this.dismissSecs;
-        },
-        onClose(id) {
+      this.dismissCountDown = this.dismissSecs;
+    },
+    onClose(id) {
       this.$root.$emit("bv::hide::popover", id);
     },
-    
-        countDownChanged(dismissCountDown) {
+
+    countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;
     },
     paginador(lista) {
@@ -244,28 +255,29 @@ import Card from '../../components/Cards/Card.vue';
           : indiceInicio + this.porPagina;
       return lista.slice(indiceInicio, indiceFinal);
     },
-      },
-    computed: {
+  },
+  computed: {
     rows() {
       return this.postss.length;
     },
   },
-   created() {
+  created() {
     this.obtenerPosts();
-     },
-   
-    };
+  },
+};
 </script>
 
 <style>
-#tarjeta{
+#contenedor{
+  justify-content: center;
+}
+#tarjeta {
   width: 13cm;
   box-shadow: 3px 5px 12px 3px gray;
   border-radius: 10px, 10px, 10px, 10px;
 }
-#icono{
-  width: 3cm ;
+#icono {
+  width: 3cm;
   height: 3cm;
 }
-
 </style>

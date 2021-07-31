@@ -1,84 +1,246 @@
 <template>
-  <div
-      class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
-      style="
-        min-height: 600px;
-        background-size: cover;
-        background-position: center top;">
+  <div>
+    <br />
+    <br />
+    <b-container fluid class="mt--12">
+      <!-- CONTENEDOR PRINCIPAL -->
+      <b-alert
+        :show="dismissCountDown"
+        dismissible
+        fade
+        :variant="colorVariante"
+        class="position-fixed fixed-top m-0 rounded-0"
+        @dismissed="dismissCountDown = 0"
+        @dismiss-count-down="countDownChanged"
+      >
+        {{ alerTexto }}
+      </b-alert>
+      <!-- ALERTA QUE SE MOSTRARA AL INTENTAR AGREGAR UN NUEVO REGISTRO  -->
 
-      <b-container fluid>
-        <b-row>
-          <b-col>
-            <h1>Productos</h1>
-          </b-col>
-        </b-row>
+      <b-row>
+        <b-col>
+          <h1>Publicaciones</h1>
+        </b-col>
+      </b-row>
+      <!-- SECCION PARA EL TITULO -->
 
-        <b-jumbotron 
-          bg-variant="white"
-          class="shadow-lg p-5 mb-5 bg-white rounded">
-          <h2 class="text-center fontLabel">Agregar Producto</h2>
-         <hr class="separador mt-2"/>
+      <b-jumbotron
+        bg-variant="white"
+        class="shadow-lg p-5 mb-5 bg-white rounded"
+      >
+        <!-- SECCION PARA EL CUERPO DEL FORMULARIO -->
+        <h2 class="fuente_texto text-center">Agregar publicaciones</h2>
+        <hr class="separador mt-2" />
 
- <!-- FORMULARIO  -->
-        <form >
-            <b-container>
-               <!-- NOMBRE PRODUCTO -->
-              <b-row>
-                <b-col cols= "12" lg="6" xl="6">
+        <b-row align-v="start">
+          <!-- SECCION PARA ID Y NOMBRE ASOCIACION -->
+          
+          <b-col cols="12" lg="6" xl="6">
             <b-form>
               <b-form-group
-                class="fontLabel"
-                label="Nombre del producto :"
-                label-for="input-medida">
-                <b-form-input
-                  id="input-1"
-                  v-model="info.nombreProducto"
-                  class="fontInput"
-                  placeholder="Ingresa el nombre del producto"
-                ></b-form-input>
-              </b-form-group>
-            </b-form>
-                </b-col>
-                 <!-- UNIDAD MEDIDA -->
-                <b-col>
-                  <b-form>
-               <b-form-group
-                    id="input-group-medida"
-                    label="Unidad de medida:"
-                    label-for="input-medida"
-                    class="fontLabel">
-                    <b-form-input
-                      id="input-medida"
-                      placeholder="Escribir la unidad de medida"
-                      class="fontInput"
-                      v-model="info.unidadMedida"
-                    ></b-form-input>
+                    id="input-group-rol"
+                    label="Categoria:"
+                    label-for="input-rol"
+                     class="text-start fuente_texto"
+                  >
+                    <b-form-select
+                    :options="listaCategoria"
+                    v-model="items.idCategoria"
+                      id="input-rol"
+                      value-field="idCategoria"
+                      text-field="nombreCategoria"
+                      class="caja_texto"
+                    ></b-form-select>
                   </b-form-group>
             </b-form>
-                </b-col>
-              </b-row>
-              <br />
+          </b-col>
+          <!-- COLUMNA PARA CIUDAD DE LA ASOCIACION -->
+          <b-col cols="12" lg="6" xl="6">
+            <b-form>
+              <b-form-group
+                    id="input-group-rol"
+                    label="Usuario:"
+                    label-for="input-rol"
+                     class="text-start fuente_texto"
+                  >
+                    <b-form-select
+                    :options="usuarios"
+                    v-model="items.idUsuario"
+                      id="input-rol"
+                      value-field="idUsuario"
+                      text-field="nombreUsuario"
+                      class="caja_texto"
+                    ></b-form-select>
+                  </b-form-group>
+            </b-form>
+          </b-col>
 
-               <br />
-                <!-- botones -->
-              <b-row aling="rigth">
-              <b-col></b-col>
-                <b-button class="m-1" @click="onSubmit()" type="submit" variant="modificar"  
-                href="#/productos"> Guardar</b-button>
-                <b-button class="m-1" href="#/productos" variant="eliminar"> Cancelar</b-button>
-              </b-row>
-            </b-container>
-         </form>
-        </b-jumbotron>
-      </b-container>
-    </div>
+          
+        </b-row>
+
+        <b-row class="" align-h="around">
+          <b-col cols="12" md="12" lg="3" xl="9" align-self="end" class="mt-lg-0 mt-4">
+          <b-form>
+              <b-form-group
+                class="text-start fuente_texto"
+                label="Contenido:"
+                label-for="input-1"
+              >
+                <b-form-textarea
+                  id="input-1"
+                  v-model="items.contenido"
+                  class="caja_texto"
+                  placeholder="Ingrese una descripcion de la asociación"
+                ></b-form-textarea>
+              </b-form-group>
+            </b-form>
+        </b-col>
+          <!-- COLUMNA PARA EL CODIGO POSTAL DE LA ASOCIACION -->
+        </b-row>
+
+        <b-row class="" align-h="around">
+          <!-- SECCION PARA CIUDAD Y CORREO ELECTRONICO DE LA ASOCIACION -->
+          
+          <!-- COLUMNA PARA EL CORREO ELECTRONICO DE LA ASOCIACION -->
+        </b-row>
+
+        
+
+        <br />
+
+        <b-row>
+          <!-- SECCION PARA LOS BOTONES DE GUARDAR Y CANCELAR -->
+          <b-col align="right">
+            <b-button
+              class="m-1"
+              @click="onSubmit()"
+              type="submit"
+              variant="modificar"
+              >Guardar</b-button
+            >
+
+            <b-button class="m-1" href="#/posts" variant="eliminar"
+              >Cancelar</b-button
+            >
+          </b-col>
+        </b-row>
+      </b-jumbotron>
+    </b-container>
+  </div>
 </template>
 
 <script>
-    
+import axios from "axios";
+export default {
+  name: "AgregarPost",
+  data() {
+    return {
+      dismissSecs: 5,
+      alertMsj: false,
+      alerTexto: "",
+      colorVariante: "",
+      dismissCountDown: 0,
+      usuarios:[],
+      items: {
+        idCategoria: null,
+        idUsuario: null,
+        contenido: "",
+      },
+      listaCategoria: [
+        {
+          idCategoria:1,
+          nombreCategoria:"Noticia"
+        },
+        {
+          idCategoria:2,
+          nombreCategoria:"Informativo"
+        },
+        {
+          idCategoria:3,
+          nombreCategoria:"Evento"
+        },
+        {
+          idCategoria:4,
+          nombreCategoria:"Anuncio"
+        }
+      ],
+      show: true,
+    };
+  },
+  methods: {
+    onSubmit() {
+      //METODO GUARDAR UN NUEVO REGISTRO
+      const path = "http://localhost:9090/apimiel/web/notas/agregar";
 
+      if (
+        this.items.idCategoria &&
+        this.items.idUsuario &&
+        this.items.contenido 
+      ) {
+        setTimeout(() => this.$router.push({ path: "/posts" }), 2000);
+        axios
+          .post(path, {
+            categoriaPost: this.items.idCategoria,
+            usuario: this.items.idUsuario,
+            contenido: this.items.contenido,
+          })
+          .then((response) => {
+            //EN CASO DE QUE FUNCIONE TODO BIEN, SE MOSTRARA UNA ALERTA DE CONFIRMACION
+            this.alerTexto = "Publicacion agregada correctamente";
+            this.colorVariante = "success";
+            this.alertMsj = true;
+            console.log(this.alerTexto);
+            console.log(response);
+          })
+          .catch((error) => {
+            // EN CASO DE ERROR SE MOSTRARA UNA ALERTA DE ERROR
+            alert("Algo salio mal (" + error + ")");
+            console.log(this.alerTexto);
+            console.log(error);
+          });
+      } else {
+        //ALERTA POR SI FALTAN CAMPOS POR LLENAR
+        this.alerTexto = "Campos vacios, favor de llenar el formulario";
+        this.colorVariante = "warning";
+        this.alertMsj = true;
+      }
+      this.dismissCountDown = this.dismissSecs;
+    },
+    listaUsuarios() {
+      const path = "http://localhost:9090/apimiel/web/usuarios";
+      axios
+        .get(path)
+        .then((response) => {
+          this.usuarios = response.data;
+          console.log(this.usuarios);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    countDownChanged(dismissCountDown) {
+      //METODO CONTADOR PARA OCULTAR LAS ALERTAS
+      this.dismissCountDown = dismissCountDown;
+    },
+  },
+  created() {
+    this.listaUsuarios();
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+.caja_texto {
+  color: rgb(0, 110, 255);
+  background-color: #f5f7ff;
+}
+.separador {
+  border: 1px solid #767676;
+  border-radius: 50px;
+  background-color: gray;
+}
+.fuente_texto {
+  color: #767676;
+  font-weight: bold;
+}
 </style>

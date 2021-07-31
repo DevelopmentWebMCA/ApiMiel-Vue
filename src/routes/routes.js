@@ -59,12 +59,12 @@ const routes = [
       {
         path: '/posts/agregar',
         name: 'PostAgregar',
-        component: () => import('../views/MODULO_ASOCIACIONES/AgregarAsociacion.vue')
+        component: () => import('../views/MODULO_POSTS/AgregarPost.vue')
       },
       {
         path: '/posts/actualizar/:id',
         name: 'PostsModificar',
-        component: () => import('../views/MODULO_ASOCIACIONES/ModificarAsociacion.vue'),
+        component: () => import('../views/MODULO_POSTS/ModificarPost.vue'),
         props:true
       },
 
