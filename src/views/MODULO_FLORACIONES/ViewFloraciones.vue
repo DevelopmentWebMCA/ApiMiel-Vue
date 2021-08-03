@@ -50,7 +50,7 @@
             </b-form>
           </b-col>
           <b-col align-self="end" cols="12" md="12" lg="3" xl="3" class="mt-4 mt-lg-0">
-            <b-button href="#/agregarFloracion" variant="primario" block>
+            <b-button href="#/floraciones/agregarFloracion" variant="primario" block>
               Agregar
             </b-button>
           </b-col>
@@ -110,11 +110,6 @@
               </b-row> -->
 
               <b-row class="mb-2">
-                <b-col sm="3" class="text-sm-right"><b>Nombre Finca:</b></b-col>
-                <b-col>{{ row.item.nombreFinca }}</b-col>
-              </b-row>
-
-              <b-row class="mb-2">
                 <b-col sm="3" class="text-sm-right"
                   ><b>Familia Flores:</b></b-col
                 >
@@ -126,6 +121,11 @@
                   ><b>Especie Flores:</b></b-col
                 >
                 <b-col>{{ row.item.especieFlores }}</b-col>
+              </b-row>
+
+              <b-row class="mb-2">
+                <b-col sm="3" class="text-sm-right"><b>Nombre Finca:</b></b-col>
+                <b-col>{{ row.item.nombreFinca }}</b-col>
               </b-row>
 
               <b-row class="mb-2">
@@ -244,8 +244,8 @@ export default {
       showDismissibleAlert: false,
       fields: [
         "nombreComun",
-        "regionEstado",
         "nombreCientifico",
+        "regionEstado",
         "periodoFloracion",
         "detalles",
       ],
@@ -293,7 +293,7 @@ export default {
         });
     },
     modificarArea(id) {
-      this.$router.push(`/modificarFloracion/${id}`);
+      this.$router.push(`/floraciones/modificarFloracion/${id}`);
     },
     onClose(id) {
       this.$root.$emit("bv::hide::popover", id);

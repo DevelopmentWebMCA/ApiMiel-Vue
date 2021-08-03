@@ -20,7 +20,7 @@
       </b-alert>
         <b-row>
           <b-col>
-            <h1>Usuarios</h1>
+            <h1 class="mb-4">Usuarios</h1>
           </b-col>
         </b-row>
 

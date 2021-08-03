@@ -1,7 +1,13 @@
 <template>
   <div>
-    <br />
-    <br />
+    <div
+      class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
+      style="
+        min-height: 600px;
+        background-size: cover;
+        background-position: center top;
+      "
+    >
     <b-container fluid class="mt--12">
       <b-alert
         :show="dismissCountDown"
@@ -17,7 +23,7 @@
 
       <b-row>
         <b-col>
-          <h1>Áreas de Floración</h1>
+          <h1 class="mb-4">Áreas de Floración</h1>
         </b-col>
       </b-row>
 
@@ -25,66 +31,39 @@
         bg-variant="white"
         class="shadow-lg p-5 mb-5 bg-white rounded"
       >
-        <h2 class="text-center fontLabel">Agregar área de floración</h2>
+        <h2 class="text-center fontLabel">Agregar Área de Floración</h2>
         <hr class="mt-2 separador" />
         <b-form>
           <b-container>
             <b-row>
-              <b-col cols="12" lg="4">
-                <b-form-group
-                  id="input-group-name"
-                  label="Nombre Finca:"
-                  label-for="input-name"
-                  class="fontLabel"
-                >
-                  <b-form-input
-                    id="input-name"
-                    placeholder="Escribir nombre de la finca"
-                    v-model="areas.nombreFinca"
-                    class="fontInput"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col cols="12" lg="4">
-                <b-form-group
-                  id="input-group-region"
-                  label="Región - Estado:"
-                  label-for="input-region"
-                  class="fontLabel"
-                >
-                  <b-form-input
-                    id="input-region"
-                    placeholder="Escribir región o estado"
-                    class="fontInput"
-                    v-model="areas.regionEstado"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col cols="12" lg="4">
-                <b-form-group
-                  id="input-group-nombre"
-                  label="Nombre Común:"
-                  label-for="input-nombre"
-                  class="fontLabel"
-                >
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-nombre">Nombre Común </label><span class="text-red"> *</span>
+                <b-form-group>
                   <b-form-input
                     id="input-nombre"
                     placeholder="Escribir nombre común"
                     class="fontInput"
                     v-model="areas.nombreComun"
                   ></b-form-input>
+                 </b-form-group>
+              </b-col>
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-cientifico">Nombre Científico </label><span class="text-red"> *</span>
+                <b-form-group>
+                  <b-form-input
+                    id="input-cientifico"
+                    class="fontInput"
+                    placeholder="Escribir el nombre cientifico"
+                    v-model="areas.nombreCientifico"
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
             </b-row>
 
             <b-row>
-              <b-col cols="12" lg="4">
-                <b-form-group
-                  id="input-group-familia"
-                  label="Familia Flores:"
-                  label-for="input-familia"
-                  class="fontLabel"
-                >
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-familia">Familia Flores </label><span class="text-red"> *</span>
+                <b-form-group>
                   <b-form-input
                     id="input-familia"
                     class="fontInput"
@@ -93,13 +72,10 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col cols="12" lg="4">
-                <b-form-group
-                  id="input-group-especie"
-                  label="Especie Flores:"
-                  label-for="input-especie"
-                  class="fontLabel"
-                >
+
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-especie">Especie Flores </label><span class="text-red"> *</span>
+                <b-form-group>
                   <b-form-input
                     id="input-especie"
                     class="fontInput"
@@ -108,30 +84,12 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col cols="12" lg="4">
-                <b-form-group
-                  id="input-group-visita"
-                  label="Nombre Científico:"
-                  label-for="input-visita"
-                  class="fontLabel"
-                >
-                  <b-form-input
-                    id="input-visita"
-                    class="fontInput"
-                    placeholder="Escribir el nombre cientifico"
-                    v-model="areas.nombreCientifico"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
             </b-row>
+
             <b-row>
-              <b-col cols="12" lg="4">
-                <b-form-group
-                  id="input-group-floracion"
-                  label="Periodo de floración:"
-                  label-for="input-floracion"
-                  class="fontLabel"
-                >
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-floracion">Periodo de Floración </label><span class="text-red"> *</span>
+                <b-form-group>
                   <b-form-input
                     id="input-floracion"
                     placeholder="Escribir el periodo de floracion"
@@ -140,13 +98,34 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col cols="12" lg="4">
-                <b-form-group
-                  id="input-group-latitud"
-                  label="Latitud:"
-                  class="fontLabel"
-                  label-for="input-latitud"
-                >
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-name">Nombre Finca </label><span class="text-red"> *</span>
+                <b-form-group>
+                  <b-form-input
+                    id="input-name"
+                    placeholder="Escribir nombre de la finca"
+                    v-model="areas.nombreFinca"
+                    class="fontInput"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-region">Región - Estado </label><span class="text-red"> *</span>
+                <b-form-group>
+                  <b-form-input
+                    id="input-region"
+                    placeholder="Escribir región o estado"
+                    class="fontInput"
+                    v-model="areas.regionEstado"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-latitud">Latitud </label><span class="text-red"> *</span>
+                <b-form-group>
                   <b-form-input
                     id="input-latitud"
                     class="fontInput"
@@ -157,13 +136,11 @@
                   ></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col>
-                <b-form-group
-                  id="input-group-longitud"
-                  label="Longitud:"
-                  class="fontLabel"
-                  label-for="input-longitud"
-                >
+            </b-row>
+            <b-row>
+              <b-col cols="12" lg="6" xl="6">
+                <label class="fontLabel" for="input-longitud">Longitud </label><span class="text-red"> *</span>
+                <b-form-group>
                   <b-form-input
                     id="input-longitud"
                     placeholder="Escribir longitud"
@@ -173,16 +150,17 @@
                     v-model="areas.longitud"
                   ></b-form-input>
                 </b-form-group>
+                <small class="text-red">* Campos obligatorios </small>
               </b-col>
+              
+               
+             
             </b-row>
             <b-row>
               <b-col align="right">
-                <b-button
-                    @click="onSubmit()"
-                    variant="modificar"
-                    class="m-2"
-                    >Guardar</b-button
-                  >
+                <b-button @click="onSubmit()" variant="modificar" class="m-2"
+                  >Guardar</b-button
+                >
                 <b-button href="#/floraciones" variant="eliminar" class="mr-2"
                   >Cancelar</b-button
                 >
@@ -192,6 +170,7 @@
         </b-form>
       </b-jumbotron>
     </b-container>
+  </div>
   </div>
 </template>
 
@@ -205,7 +184,7 @@ export default {
       dismissSecs: 5,
       alertMsj: false,
       alerTexto: "",
-      colorVariante: "warning",
+      colorVariante: "",
       dismissCountDown: 0,
       areas: {
         nombreFinca: "",
@@ -236,7 +215,7 @@ export default {
         this.areas.latitud &&
         this.areas.longitud
       ) {
-       setTimeout(() => this.$router.push({ path: "/floraciones" }), 2000);
+        setTimeout(() => this.$router.push({ path: "/floraciones" }), 2000);
         axios
           .post(path, {
             nombreFinca: this.areas.nombreFinca,

@@ -75,13 +75,13 @@ const routes = [
         component: () => import('../views/MODULO_USUARIOS/ViewUsuarios.vue')
       },
       {
-        path: '/agregarUsuario',
+        path: '/usuarios/agregarUsuario',
         name: 'agregarUsuario',
         component: () => import('../views/MODULO_USUARIOS/AgregarUsuario.vue')
       },
       ,
       {
-        path: '/modificarUsuario/:id',
+        path: '/usuarios/modificarUsuario/:id',
         name: 'modificarUsuario',
         component: () => import('../views/MODULO_USUARIOS/ModificarUsuario.vue'),
         props: true
@@ -95,12 +95,12 @@ const routes = [
       },
       ,
       {
-        path: '/agregarFloracion',
+        path: '/floraciones/agregarFloracion',
         name: 'agregarFloracion',
         component: () => import('../views/MODULO_FLORACIONES/AgregarAreaFloracion.vue')
       },
       {
-        path: '/modificarFloracion/:id',
+        path: '/floraciones/modificarFloracion/:id',
         name: 'modificarFloracion',
         component: () => import('../views/MODULO_FLORACIONES/ModificarAreaFloracion.vue'),
         props: true

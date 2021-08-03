@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="header pb-8 pt-5 d-flex align-items-center profile-header"
+      class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center profile-header"
       style="
         min-height: 600px;
         background-size: cover;
@@ -36,12 +36,8 @@
             <b-container>
               <b-row>
                 <b-col cols="12" lg="6" xl="6">
-                  <b-form-group
-                    id="input-group-name"
-                    label="Nombre Completo:"
-                    label-for="input-name"
-                    class="fontLabel"
-                  >
+                  <label class="fontLabel" for="input-name">Nombre Completo </label><span class="text-red"> *</span>
+                  <b-form-group>
                     <b-form-input
                       id="input-name"
                       v-model="users.nombreUsuario"
@@ -51,12 +47,8 @@
                   </b-form-group>
                 </b-col>
                 <b-col>
-                  <b-form-group
-                    id="input-group-correo"
-                    label="Correo electrónico:"
-                    label-for="input-correo"
-                    class="fontLabel"
-                  >
+                  <label class="fontLabel" for="input-correo">Correo Electrónico </label><span class="text-red"> *</span>
+                  <b-form-group>
                     <b-form-input
                       id="input-correo"
                       class="fontInput"
@@ -70,13 +62,8 @@
 
               <b-row>
                 <b-col cols="12" lg="6" xl="6">
-
-                  <b-form-group
-                    id="input-group-contrasiena"
-                    label="Contraseña:"
-                    label-for="text-password"
-                    class="fontLabel"
-                  > 
+                  <label class="fontLabel" for="text-password">Contraseña </label><span class="text-red"> *</span>
+                  <b-form-group> 
                     <b-input-group-append>
                       <b-form-input
                         :type="type"
@@ -90,19 +77,16 @@
                       <b-button class="fontInput" type="password" @click="showPassword">
                         <b-icon :icon="icon"></b-icon>
                       </b-button>
-                    </b-input-group-append>
+                      </b-input-group-append>
                     <b-form-text id="password-help-block">
                       Su contraseña debe tener entre 8 y 20.
                     </b-form-text>
                   </b-form-group>
+                  <small class="text-red">* Campos obligatorios </small>
                 </b-col>
                 <b-col>
-                  <b-form-group
-                    id="input-group-rol"
-                    label="Rol:"
-                    label-for="input-rol"
-                    class="fontLabel"
-                  >
+                  <label class="fontLabel" for="input-rol">Rol </label><span class="text-red"> *</span>
+                  <b-form-group>
                     <b-form-select
                       id="input-rol"
                       :options="roles"
@@ -112,13 +96,13 @@
                       class="fontInput"
                     ></b-form-select>
                   </b-form-group>
+                  
                 </b-col>
               </b-row>
               <b-row>
                 <b-col align="right">
                   <b-button
                     @click="onSubmit()"
-                    type="submit"
                     variant="modificar"
                     class="m-2"
                     >Guardar</b-button
@@ -151,7 +135,7 @@ export default {
       dismissCountDown: 0,
       type: "password",
       alerTexto: "",
-      colorVariante: "warning",
+      colorVariante: "",
       icon: "eye",
       users: {
         nombreUsuario: "",
@@ -166,7 +150,6 @@ export default {
       show: true,
     };
   },
-  props: {},
   methods: {
     onSubmit() {
       const path = "http://localhost:9090/apimiel/web/usuarios/agregar";

@@ -57,7 +57,7 @@
             xl="3"
             class="mt-4 mt-lg-0"
           >
-            <b-button block href="#/agregarUsuario" variant="primario">
+            <b-button block href="#/usuarios/agregarUsuario" variant="primario">
               Agregar
             </b-button>
           </b-col>
@@ -268,7 +268,7 @@ export default {
         });
     },
     modificarUsuario(id) {
-      this.$router.push(`/modificarUsuario/${id}`);
+      this.$router.push(`/usuarios/modificarUsuario/${id}`);
     },
     eliminarUsuario(id) {
       const path = `http://localhost:9090/apimiel/web/usuarios/eliminar/${id}`;
