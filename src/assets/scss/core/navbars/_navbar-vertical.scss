@@ -70,7 +70,7 @@
             font-size: $navbar-nav-link-font-size;
 
             &.active {
-                color: #FFD875;
+                color: #c56525;
                 position: relative;
 
                 &:before {
@@ -79,7 +79,7 @@
                     left: 0;
                     top: $nav-link-padding-y;
                     bottom: $nav-link-padding-y;
-                    border-left: 3px solid #FFD875;
+                    border-left: 3px solid #c56525;
                 }
             }
 
@@ -231,13 +231,13 @@
                         padding: $navbar-vertical-nav-link-padding-y $navbar-vertical-nav-link-padding-x;
 
                         &.active {
-                            color: #FFD875;
+                            color: #c56525;
                             &:before {
                                 top: $nav-link-padding-y;
                                 bottom: $nav-link-padding-y;
                                 left: auto;
                                 right: 0;
-                                border-left: 4px solid #FFD875;
+                                border-left: 4px solid #c56525;
                                 border-bottom: 0;
                             }
                         }
